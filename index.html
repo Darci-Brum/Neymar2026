@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Legends Stats | Dados dos Jogadores</title>
+  <meta name="description" content="Dados, gols e marcos da carreira de Neymar, Messi e Cristiano Ronaldo." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="logo" href="index.html" aria-label="Página inicial">
+        <span class="logo-mark">⚽</span>
+        <span>Legends Stats</span>
+      </a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a class="active" href="index.html">Dados</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div>
+        <span class="eyebrow">Base editável para GitHub Pages</span>
+        <h1>Dados e marcos dos <span class="title-gradient">craques</span></h1>
+        <p class="lead">
+          Projeto estático em HTML, CSS e JavaScript com cards, busca, filtros e uma base simples para incluir novos jogadores futuramente.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#jogadores">Ver jogadores</a>
+          <a class="btn btn-secondary" href="dashboard.html">Abrir dashboard</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Ranking de gols">
+        <div class="panel-title">
+          <h2>Ranking por gols</h2>
+          <span class="live-dot" id="updatedAt">Atualizado</span>
+        </div>
+        <div class="mini-ranking" id="rankingList"></div>
+      </aside>
+    </section>
+
+    <section class="container section" id="jogadores">
+      <div class="section-title">
+        <div>
+          <h2>Jogadores cadastrados</h2>
+          <p>Veja os principais marcos, gols por clubes/seleção e resumo da carreira profissional.</p>
+        </div>
+      </div>
+
+      <div class="toolbar" aria-label="Filtros">
+        <input class="input" id="searchInput" type="search" placeholder="Buscar por jogador, país ou clube..." />
+        <select class="select" id="sortSelect">
+          <option value="goals-desc">Mais gols</option>
+          <option value="goals-asc">Menos gols</option>
+          <option value="ballon-desc">Mais Bolas de Ouro</option>
+          <option value="name-asc">Nome A-Z</option>
+        </select>
+      </div>
+
+      <div class="grid" id="playersGrid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>Legends Stats — projeto estático para portfólio.</span>
+      <span>Edite os dados no arquivo <strong>data.js</strong>.</span>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
