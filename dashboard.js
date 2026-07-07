@@ -1,241 +1,197 @@
-const players = window.PLAYERS || [];
-const formatter = new Intl.NumberFormat('pt-BR');
+const kpiGrid = document.querySelector('#kpi-grid');
+const comparisonTable = document.querySelector('#comparison-table');
 
-const labels = players.map((player) => player.name);
-const colors = players.map((player) => player.accent);
-
-function cssVar(name) {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+function formatNumber(value) {
+  return new Intl.NumberFormat('pt-BR').format(value);
 }
 
-const textColor = cssVar('--text') || '#f8fafc';
-const mutedColor = cssVar('--muted') || '#aab4c8';
-const borderColor = 'rgba(255,255,255,0.12)';
-
-Chart.defaults.color = mutedColor;
-Chart.defaults.font.family = "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-
-function baseOptions(extra = {}) {
-  return {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          color: textColor,
-          usePointStyle: true,
-          boxWidth: 8,
-          boxHeight: 8,
-          font: { weight: '700' }
-        }
-      },
-      tooltip: {
-        backgroundColor: 'rgba(7, 11, 24, 0.95)',
-        borderColor,
-        borderWidth: 1,
-        padding: 12,
-        callbacks: {
-          label(context) {
-            const label = context.dataset.label ? `${context.dataset.label}: ` : '';
-            const value = typeof context.parsed.y === 'number' ? context.parsed.y : context.parsed;
-            return `${label}${formatter.format(value)}`;
-          }
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { display: false },
-        ticks: { color: mutedColor, font: { weight: '700' } }
-      },
-      y: {
-        beginAtZero: true,
-        grid: { color: borderColor },
-        ticks: { color: mutedColor }
-      }
-    },
-    ...extra
-  };
-}
-
-function renderRanking() {
-  const element = document.querySelector('#dashboardRanking');
-  if (!element) return;
-
-  element.innerHTML = players
-    .slice()
-    .sort((a, b) => b.stats.totalGoals - a.stats.totalGoals)
-    .map((player) => `
-      <div class="rank-item">
-        <div class="avatar" style="--avatar-color: ${player.accent}">${player.initials}</div>
-        <div class="rank-info">
-          <strong>${player.name}</strong>
-          <span>${player.stats.ballonDor} Bola(s) de Ouro • ${player.stats.championsLeague} Champions</span>
-        </div>
-        <div class="rank-goals">${formatter.format(player.stats.totalGoals)}</div>
-      </div>
-    `)
-    .join('');
+function getMax(items, accessor) {
+  return Math.max(...items.map(accessor), 1);
 }
 
 function renderKpis() {
-  const element = document.querySelector('#kpiGrid');
-  if (!element) return;
+  const neymar = players.find((player) => player.id === 'neymar');
+  const messi = players.find((player) => player.id === 'messi');
+  const totalBarcaGoals = neymar.barcelona.goals + messi.barcelona.goals;
+  const totalBarcaAssists = neymar.barcelona.assists + messi.barcelona.assists;
 
-  const totalGoals = players.reduce((sum, player) => sum + player.stats.totalGoals, 0);
-  const topScorer = players.slice().sort((a, b) => b.stats.totalGoals - a.stats.totalGoals)[0];
-  const mostBallons = players.slice().sort((a, b) => b.stats.ballonDor - a.stats.ballonDor)[0];
-  const bestNationalRatio = players
-    .map((player) => ({ ...player, ratio: player.stats.nationalGoals / player.stats.nationalCaps }))
-    .sort((a, b) => b.ratio - a.ratio)[0];
-
-  const kpis = [
-    { label: 'Gols somados', value: formatter.format(totalGoals) },
-    { label: 'Maior artilheiro', value: topScorer.name },
-    { label: 'Mais Bolas de Ouro', value: mostBallons.name },
-    { label: 'Melhor média na seleção', value: `${bestNationalRatio.name} (${bestNationalRatio.ratio.toFixed(2)})` }
+  const cards = [
+    { label: 'Gols Neymar + Messi no Barça', value: totalBarcaGoals, detail: 'soma dos dois no clube' },
+    { label: 'Assistências Neymar + Messi', value: totalBarcaAssists, detail: 'participação em criação' },
+    { label: 'Títulos de Messi no Barça', value: messi.barcelona.titles, detail: 'maior vencedor do clube' },
+    { label: 'Títulos de Neymar no Barça', value: neymar.barcelona.titles, detail: 'incluindo Champions 14/15' }
   ];
 
-  element.innerHTML = kpis
-    .map((item) => `
-      <div class="stat-card">
-        <span>${item.label}</span>
-        <strong>${item.value}</strong>
-      </div>
-    `)
+  kpiGrid.innerHTML = cards
+    .map(
+      (card) => `
+        <article class="kpi-card">
+          <small>${card.label}</small>
+          <strong>${formatNumber(card.value)}</strong>
+          <span>${card.detail}</span>
+        </article>
+      `
+    )
     .join('');
+}
+
+function drawBarChart(canvasId, items, accessor, options = {}) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = canvas.height * dpr;
+  ctx.scale(dpr, dpr);
+
+  const width = rect.width;
+  const height = canvas.height / dpr;
+  const padding = { top: 24, right: 22, bottom: 64, left: 54 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = getMax(items, accessor);
+  const barGap = 18;
+  const barWidth = Math.max(28, (chartWidth - barGap * (items.length - 1)) / items.length);
+
+  ctx.clearRect(0, 0, width, height);
+  ctx.font = '600 12px Inter, sans-serif';
+  ctx.textBaseline = 'middle';
+
+  // linhas de fundo
+  ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i += 1) {
+    const y = padding.top + (chartHeight / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(width - padding.right, y);
+    ctx.stroke();
+  }
+
+  items.forEach((item, index) => {
+    const value = accessor(item);
+    const x = padding.left + index * (barWidth + barGap);
+    const barHeight = (value / maxValue) * chartHeight;
+    const y = padding.top + chartHeight - barHeight;
+
+    const gradient = ctx.createLinearGradient(0, y, 0, padding.top + chartHeight);
+    gradient.addColorStop(0, item.accent || '#e31b3f');
+    gradient.addColorStop(1, item.secondary || '#244bd6');
+
+    roundRect(ctx, x, y, barWidth, barHeight, 14, gradient);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+    ctx.font = '800 14px Inter, sans-serif';
+    ctx.fillText(formatNumber(value), x + barWidth / 2, y - 12);
+
+    ctx.fillStyle = 'rgba(255,255,255,0.72)';
+    ctx.font = '700 11px Inter, sans-serif';
+    const label = options.shortNames ? item.name.split(' ')[0] : item.name;
+    ctx.fillText(label, x + barWidth / 2, height - 38);
+  });
+}
+
+function drawGroupedCareerChart() {
+  const canvas = document.getElementById('careerChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = canvas.height * dpr;
+  ctx.scale(dpr, dpr);
+
+  const width = rect.width;
+  const height = canvas.height / dpr;
+  const padding = { top: 26, right: 24, bottom: 72, left: 60 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maxValue = getMax(players, (p) => p.career.goals);
+  const groupWidth = chartWidth / players.length;
+  const barWidth = Math.max(18, groupWidth / 4);
+
+  ctx.clearRect(0, 0, width, height);
+  ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+  for (let i = 0; i <= 4; i += 1) {
+    const y = padding.top + (chartHeight / 4) * i;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(width - padding.right, y);
+    ctx.stroke();
+  }
+
+  players.forEach((player, index) => {
+    const center = padding.left + groupWidth * index + groupWidth / 2;
+    const values = [
+      { label: 'Barça', value: player.barcelona.goals, colorA: player.accent, colorB: player.secondary },
+      { label: 'Carreira', value: player.career.goals, colorA: '#ffffff', colorB: 'rgba(255,255,255,0.35)' }
+    ];
+
+    values.forEach((bar, barIndex) => {
+      const barHeight = (bar.value / maxValue) * chartHeight;
+      const x = center - barWidth - 5 + barIndex * (barWidth + 10);
+      const y = padding.top + chartHeight - barHeight;
+      const gradient = ctx.createLinearGradient(0, y, 0, padding.top + chartHeight);
+      gradient.addColorStop(0, bar.colorA);
+      gradient.addColorStop(1, bar.colorB);
+      roundRect(ctx, x, y, barWidth, barHeight, 10, gradient);
+    });
+
+    ctx.fillStyle = 'rgba(255,255,255,0.72)';
+    ctx.font = '700 11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(player.name.split(' ')[0], center, height - 42);
+  });
+
+  ctx.textAlign = 'left';
+  ctx.font = '700 12px Inter, sans-serif';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('Claro: gols na carreira • Colorido: gols no Barcelona', padding.left, height - 16);
+}
+
+function roundRect(ctx, x, y, width, height, radius, fillStyle) {
+  const r = Math.min(radius, width / 2, height / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + width, y, x + width, y + height, r);
+  ctx.arcTo(x + width, y + height, x, y + height, r);
+  ctx.arcTo(x, y + height, x, y, r);
+  ctx.arcTo(x, y, x + width, y, r);
+  ctx.closePath();
+  ctx.fillStyle = fillStyle;
+  ctx.fill();
 }
 
 function renderTable() {
-  const table = document.querySelector('#comparisonTable');
-  if (!table) return;
-
-  table.innerHTML = players
-    .slice()
-    .sort((a, b) => b.stats.totalGoals - a.stats.totalGoals)
-    .map((player) => `
-      <tr>
-        <td><strong>${player.name}</strong></td>
-        <td>${player.country}</td>
-        <td><span class="badge">${player.currentClub}</span></td>
-        <td>${formatter.format(player.stats.totalGoals)}</td>
-        <td>${formatter.format(player.stats.clubGoals)}</td>
-        <td>${formatter.format(player.stats.nationalGoals)}</td>
-        <td>${formatter.format(player.stats.ballonDor)}</td>
-        <td>${formatter.format(player.stats.championsLeague)}</td>
-      </tr>
-    `)
+  comparisonTable.innerHTML = players
+    .map(
+      (player) => `
+        <tr>
+          <td><b>${player.name}</b><small>${player.nickname}</small></td>
+          <td>${player.country}</td>
+          <td>${player.era}</td>
+          <td>${formatNumber(player.barcelona.matches)}</td>
+          <td>${formatNumber(player.barcelona.goals)}</td>
+          <td>${formatNumber(player.barcelona.assists)}</td>
+          <td>${formatNumber(player.barcelona.titles)}</td>
+          <td>${formatNumber(player.career.goals)}</td>
+        </tr>
+      `
+    )
     .join('');
 }
 
-function createCharts() {
-  const goalsCanvas = document.querySelector('#goalsChart');
-  const clubNationalCanvas = document.querySelector('#clubNationalChart');
-  const trophiesCanvas = document.querySelector('#trophiesChart');
-  const ratioCanvas = document.querySelector('#ratioChart');
-
-  if (goalsCanvas) {
-    new Chart(goalsCanvas, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Gols totais',
-          data: players.map((player) => player.stats.totalGoals),
-          backgroundColor: colors,
-          borderRadius: 14
-        }]
-      },
-      options: baseOptions()
-    });
-  }
-
-  if (clubNationalCanvas) {
-    new Chart(clubNationalCanvas, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Clubes',
-            data: players.map((player) => player.stats.clubGoals),
-            backgroundColor: 'rgba(96, 165, 250, 0.78)',
-            borderRadius: 14
-          },
-          {
-            label: 'Seleção',
-            data: players.map((player) => player.stats.nationalGoals),
-            backgroundColor: 'rgba(110, 231, 183, 0.78)',
-            borderRadius: 14
-          }
-        ]
-      },
-      options: baseOptions({ scales: { x: { stacked: true, grid: { display: false } }, y: { stacked: true, beginAtZero: true, grid: { color: borderColor } } } })
-    });
-  }
-
-  if (trophiesCanvas) {
-    new Chart(trophiesCanvas, {
-      type: 'radar',
-      data: {
-        labels: ['Bolas de Ouro', 'Champions', 'Copa do Mundo', 'Títulos seleção', 'Troféus senior'],
-        datasets: players.map((player) => ({
-          label: player.name,
-          data: [
-            player.stats.ballonDor,
-            player.stats.championsLeague,
-            player.stats.worldCup,
-            player.stats.continentalSelectionTitles,
-            player.stats.seniorTeamTrophies / 5
-          ],
-          borderColor: player.accent,
-          backgroundColor: `${player.accent}33`,
-          pointBackgroundColor: player.accent
-        }))
-      },
-      options: baseOptions({
-        scales: {
-          r: {
-            beginAtZero: true,
-            grid: { color: borderColor },
-            angleLines: { color: borderColor },
-            pointLabels: { color: textColor, font: { weight: '700' } },
-            ticks: { backdropColor: 'transparent', color: mutedColor }
-          }
-        }
-      })
-    });
-  }
-
-  if (ratioCanvas) {
-    new Chart(ratioCanvas, {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Gols por jogo na seleção',
-          data: players.map((player) => Number((player.stats.nationalGoals / player.stats.nationalCaps).toFixed(2))),
-          borderColor: '#ffffff',
-          backgroundColor: 'rgba(255,255,255,0.16)',
-          pointBackgroundColor: colors,
-          pointBorderColor: colors,
-          pointRadius: 7,
-          pointHoverRadius: 9,
-          tension: 0.35,
-          fill: true
-        }]
-      },
-      options: baseOptions({
-        scales: {
-          x: { grid: { display: false }, ticks: { color: mutedColor, font: { weight: '700' } } },
-          y: { beginAtZero: true, max: 1, grid: { color: borderColor }, ticks: { color: mutedColor } }
-        }
-      })
-    });
-  }
+function renderDashboard() {
+  renderKpis();
+  drawBarChart('barcaGoalsChart', players, (player) => player.barcelona.goals, { shortNames: true });
+  drawBarChart('assistsChart', players, (player) => player.barcelona.assists, { shortNames: true });
+  drawGroupedCareerChart();
+  renderTable();
 }
 
-renderRanking();
-renderKpis();
-renderTable();
-createCharts();
+window.addEventListener('resize', () => {
+  clearTimeout(window.__chartResize);
+  window.__chartResize = setTimeout(renderDashboard, 150);
+});
+
+renderDashboard();

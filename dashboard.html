@@ -1,99 +1,122 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Legends Stats | Dashboard Comparativo</title>
-  <meta name="description" content="Dashboard comparativo com gols, títulos e estatísticas dos jogadores." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barça Legends | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="header">
-    <div class="container nav">
-      <a class="logo" href="index.html" aria-label="Página inicial">
-        <span class="logo-mark">⚽</span>
-        <span>Legends Stats</span>
-      </a>
-      <nav class="nav-links" aria-label="Navegação principal">
-        <a href="index.html">Dados</a>
-        <a class="active" href="dashboard.html">Dashboard</a>
-      </nav>
-    </div>
+  <div class="page-bg"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Página inicial">
+      <span class="brand-badge">FCB</span>
+      <span>
+        <strong>Barça Legends</strong>
+        <small>Dashboard comparativo</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Menu principal">
+      <a href="index.html">Dados</a>
+      <a class="active" href="dashboard.html">Dashboard</a>
+    </nav>
   </header>
 
   <main>
-    <section class="container hero">
+    <section class="dashboard-hero section-pad">
       <div>
-        <span class="eyebrow">Comparativo visual</span>
-        <h1>Dashboard de <span class="title-gradient">performance</span></h1>
-        <p class="lead">
-          Compare gols totais, gols por clube, gols por seleção, títulos e prêmios individuais. Os gráficos usam a mesma base de dados da página inicial.
+        <p class="eyebrow">Painel comparativo</p>
+        <h1>Dashboard dos craques</h1>
+        <p>
+          Compare gols, assistências, jogos e títulos. O foco visual é Neymar no Barcelona e Messi, mantendo espaço para outros jogadores.
         </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#graficos">Ver gráficos</a>
-          <a class="btn btn-secondary" href="index.html">Voltar aos dados</a>
-        </div>
       </div>
-
-      <aside class="hero-panel">
-        <div class="panel-title">
-          <h2>Resumo rápido</h2>
-          <span class="live-dot">Ativo</span>
-        </div>
-        <div class="mini-ranking" id="dashboardRanking"></div>
-      </aside>
+      <div class="dashboard-score-card">
+        <span class="mini-shield">FCB</span>
+        <p>Era em foco</p>
+        <strong>Neymar 11 × Messi 10</strong>
+        <small>Visual inspirado em card de app esportivo</small>
+      </div>
     </section>
 
-    <section class="container section" id="graficos">
-      <div class="kpi-grid" id="kpiGrid"></div>
+    <section class="section-pad compact-top">
+      <div id="kpi-grid" class="kpi-grid"></div>
+    </section>
 
-      <div class="dashboard-grid">
-        <article class="chart-card">
-          <h3>Gols totais</h3>
-          <div class="chart-wrap"><canvas id="goalsChart"></canvas></div>
-        </article>
-        <article class="chart-card">
-          <h3>Clubes x Seleção</h3>
-          <div class="chart-wrap"><canvas id="clubNationalChart"></canvas></div>
-        </article>
-        <article class="chart-card">
-          <h3>Títulos importantes</h3>
-          <div class="chart-wrap"><canvas id="trophiesChart"></canvas></div>
-        </article>
-        <article class="chart-card">
-          <h3>Gols por jogo na Seleção</h3>
-          <div class="chart-wrap"><canvas id="ratioChart"></canvas></div>
-        </article>
-        <article class="chart-card full table-card">
-          <h3>Tabela comparativa</h3>
+    <section class="dashboard-grid section-pad compact-top">
+      <article class="chart-card">
+        <div class="chart-title">
+          <span>01</span>
+          <div>
+            <h2>Gols pelo Barcelona</h2>
+            <p>Comparação direta na passagem pelo clube.</p>
+          </div>
+        </div>
+        <canvas id="barcaGoalsChart" height="260"></canvas>
+      </article>
+
+      <article class="chart-card">
+        <div class="chart-title">
+          <span>02</span>
+          <div>
+            <h2>Assistências pelo Barcelona</h2>
+            <p>Criação de jogadas e participação ofensiva.</p>
+          </div>
+        </div>
+        <canvas id="assistsChart" height="260"></canvas>
+      </article>
+
+      <article class="chart-card wide-chart">
+        <div class="chart-title">
+          <span>03</span>
+          <div>
+            <h2>Carreira x Barcelona</h2>
+            <p>Quanto os números do Barcelona representam na carreira informada no arquivo de dados.</p>
+          </div>
+        </div>
+        <canvas id="careerChart" height="300"></canvas>
+      </article>
+    </section>
+
+    <section class="section-pad compact-top">
+      <div class="table-card">
+        <div class="chart-title">
+          <span>04</span>
+          <div>
+            <h2>Tabela comparativa</h2>
+            <p>Dados principais dos jogadores cadastrados.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Jogador</th>
                 <th>País</th>
-                <th>Clube atual</th>
-                <th>Gols totais</th>
-                <th>Gols clubes</th>
-                <th>Gols seleção</th>
-                <th>Bolas de Ouro</th>
-                <th>Champions</th>
+                <th>Era</th>
+                <th>Jogos Barça</th>
+                <th>Gols Barça</th>
+                <th>Assistências Barça</th>
+                <th>Títulos Barça</th>
+                <th>Gols carreira</th>
               </tr>
             </thead>
-            <tbody id="comparisonTable"></tbody>
+            <tbody id="comparison-table"></tbody>
           </table>
-        </article>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <span>Dashboard criado com Chart.js via CDN.</span>
-      <span>Para publicar: GitHub → Settings → Pages.</span>
-    </div>
+  <footer class="site-footer">
+    <p>Para atualizar números, edite somente o arquivo <code>data.js</code>.</p>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="data.js"></script>
   <script src="dashboard.js"></script>
 </body>

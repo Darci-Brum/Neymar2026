@@ -1,145 +1,119 @@
-// Base de dados do projeto.
-// Para adicionar outro jogador, copie um objeto, altere os campos e salve.
-// Os valores abaixo foram organizados para fins de portfólio/dashboard e devem ser revisados quando as estatísticas mudarem.
+/*
+  Banco de dados simples do site.
+  Para adicionar novos jogadores, copie um bloco abaixo, altere os dados e salve.
+  O site atualiza a página de dados e o dashboard automaticamente.
+*/
 
-window.PLAYERS = [
+const players = [
   {
     id: 'neymar',
-    name: 'Neymar Jr.',
-    fullName: 'Neymar da Silva Santos Júnior',
-    initials: 'NJ',
+    name: 'Neymar Jr',
+    nickname: 'Ousadia e Alegria',
     country: 'Brasil',
-    position: 'Meia-atacante / Atacante',
-    currentClub: 'Santos',
-    birth: '05/02/1992',
-    active: true,
-    accent: '#00e676',
-    stats: {
-      totalGoals: 457,
-      clubGoals: 377,
-      nationalGoals: 80,
-      nationalCaps: 130,
-      careerMatches: 764,
-      ballonDor: 0,
-      championsLeague: 1,
-      worldCup: 0,
-      continentalSelectionTitles: 1,
-      seniorTeamTrophies: 31
+    number: 11,
+    era: 'Barcelona: 2013–2017',
+    accent: '#e31b3f',
+    secondary: '#f4c430',
+    shortBio:
+      'Chegou ao Barcelona em 2013 e formou, ao lado de Messi e Suárez, o histórico trio MSN. Foi peça-chave na Champions League 2014/15 e marcou em momentos decisivos.',
+    barcelona: {
+      seasons: '2013–2017',
+      matches: 186,
+      goals: 105,
+      assists: 76,
+      titles: 8,
+      ucl: 1,
+      shirt: 11,
+      highlight: 'Gol na final da Champions League 2014/15 contra a Juventus.'
     },
-    clubs: [
-      { name: 'Santos', period: '2009-2013 / 2025-', goals: 153 },
-      { name: 'Barcelona', period: '2013-2017', goals: 105 },
-      { name: 'Paris Saint-Germain', period: '2017-2023', goals: 118 },
-      { name: 'Al-Hilal', period: '2023-2025', goals: 1 }
-    ],
-    summary: 'Um dos maiores talentos brasileiros da geração, conhecido por drible, criatividade, decisões em jogos grandes e liderança técnica na Seleção Brasileira.',
+    career: {
+      goals: 439,
+      nationalGoals: 79,
+      clubs: ['Santos', 'Barcelona', 'PSG', 'Al-Hilal', 'Santos']
+    },
     milestones: [
-      'Estreou profissionalmente pelo Santos em 2009.',
-      'Foi protagonista do Santos campeão da Libertadores de 2011.',
-      'Formou o trio MSN com Messi e Suárez no Barcelona.',
-      'Ganhou a Champions League 2014/15 pelo Barcelona.',
-      'Virou o maior artilheiro da história da Seleção Brasileira, com 80 gols.',
-      'Conquistou o ouro olímpico com o Brasil em 2016.',
-      'Chegou a 377 gols por clubes e 457 gols oficiais somando clubes e Seleção.'
-    ],
-    sources: [
-      'Transfermarkt: perfil e jogos/gols pela Seleção',
-      'Wikipedia: estatísticas por clube até 2026',
-      'Reuters: dados recentes da Seleção Brasileira'
+      { year: '2013', text: 'Transferência do Santos para o Barcelona.' },
+      { year: '2014/15', text: 'Triplete com La Liga, Copa do Rei e Champions League.' },
+      { year: '2015', text: 'Finalista da Bola de Ouro ao lado de Messi e Cristiano Ronaldo.' },
+      { year: '2016/17', text: 'Atuação histórica na remontada contra o PSG.' }
     ]
   },
   {
     id: 'messi',
     name: 'Lionel Messi',
-    fullName: 'Lionel Andrés Messi',
-    initials: 'LM',
+    nickname: 'La Pulga',
     country: 'Argentina',
-    position: 'Atacante / Ponta-direita',
-    currentClub: 'Inter Miami',
-    birth: '24/06/1987',
-    active: true,
-    accent: '#45b7ff',
-    stats: {
-      totalGoals: 917,
-      clubGoals: 794,
-      nationalGoals: 123,
-      nationalCaps: 202,
-      careerMatches: 1183,
-      ballonDor: 8,
-      championsLeague: 4,
-      worldCup: 1,
-      continentalSelectionTitles: 2,
-      seniorTeamTrophies: 46
+    number: 10,
+    era: 'Barcelona: 2004–2021',
+    accent: '#244bd6',
+    secondary: '#f4c430',
+    shortBio:
+      'Maior artilheiro da história do Barcelona e símbolo de uma era. Liderou o clube em títulos, gols, assistências e noites inesquecíveis no Camp Nou.',
+    barcelona: {
+      seasons: '2004–2021',
+      matches: 778,
+      goals: 672,
+      assists: 303,
+      titles: 35,
+      ucl: 4,
+      shirt: 10,
+      highlight: 'Recordista de gols, jogos e títulos pelo Barcelona.'
     },
-    clubs: [
-      { name: 'Barcelona', period: '2004-2021', goals: 672 },
-      { name: 'Paris Saint-Germain', period: '2021-2023', goals: 32 },
-      { name: 'Inter Miami', period: '2023-', goals: 90 }
-    ],
-    summary: 'Gênio argentino, recordista de Bolas de Ouro, campeão mundial em 2022 e referência máxima em gols, assistências, criação e regularidade.',
+    career: {
+      goals: 880,
+      nationalGoals: 112,
+      clubs: ['Barcelona', 'PSG', 'Inter Miami']
+    },
     milestones: [
-      'Estreou pelo Barcelona em 2004, aos 17 anos.',
-      'Marcou 672 gols oficiais pelo Barcelona.',
-      'Ganhou quatro Champions League pelo Barcelona.',
-      'Conquistou a Copa América de 2021 e 2024 com a Argentina.',
-      'Foi campeão da Copa do Mundo de 2022.',
-      'Venceu oito Bolas de Ouro.',
-      'Ultrapassou 910 gols oficiais por clubes e Seleção.'
-    ],
-    sources: [
-      'MessiXRonaldo: totais de gols por clube e Seleção',
-      'Wikipedia: títulos, prêmios e recordes'
+      { year: '2004', text: 'Estreia profissional pelo Barcelona.' },
+      { year: '2009', text: 'Primeira Bola de Ouro e primeiro triplete com o clube.' },
+      { year: '2011', text: 'Show na Champions League e título contra o Manchester United.' },
+      { year: '2012', text: 'Ano de 91 gols, uma das marcas individuais mais famosas do futebol.' },
+      { year: '2021', text: 'Saiu do Barcelona como maior ídolo e recordista histórico do clube.' }
     ]
   },
   {
     id: 'cristiano',
     name: 'Cristiano Ronaldo',
-    fullName: 'Cristiano Ronaldo dos Santos Aveiro',
-    initials: 'CR',
+    nickname: 'CR7',
     country: 'Portugal',
-    position: 'Centroavante',
-    currentClub: 'Al-Nassr',
-    birth: '05/02/1985',
-    active: true,
-    accent: '#ffcf33',
-    stats: {
-      totalGoals: 976,
-      clubGoals: 830,
-      nationalGoals: 146,
-      nationalCaps: 233,
-      careerMatches: 1300,
-      ballonDor: 5,
-      championsLeague: 5,
-      worldCup: 0,
-      continentalSelectionTitles: 2,
-      seniorTeamTrophies: 35
+    number: 7,
+    era: 'Rival histórico da era Barça',
+    accent: '#ffffff',
+    secondary: '#e31b3f',
+    shortBio:
+      'Maior rival individual de Messi na era moderna. Mesmo sem passagem pelo Barcelona, entra no dashboard para comparação histórica com Neymar e Messi.',
+    barcelona: {
+      seasons: 'Sem passagem',
+      matches: 0,
+      goals: 0,
+      assists: 0,
+      titles: 0,
+      ucl: 0,
+      shirt: 7,
+      highlight: 'Rivalidade Messi x Cristiano marcou El Clásicos e a Champions League.'
     },
-    clubs: [
-      { name: 'Sporting CP', period: '2002-2003', goals: 5 },
-      { name: 'Manchester United', period: '2003-2009 / 2021-2022', goals: 145 },
-      { name: 'Real Madrid', period: '2009-2018', goals: 450 },
-      { name: 'Juventus', period: '2018-2021', goals: 101 },
-      { name: 'Al-Nassr', period: '2023-', goals: 129 }
-    ],
-    summary: 'Um dos maiores artilheiros da história, símbolo de longevidade, potência física, mentalidade competitiva e decisões em Champions League.',
+    career: {
+      goals: 910,
+      nationalGoals: 130,
+      clubs: ['Sporting', 'Manchester United', 'Real Madrid', 'Juventus', 'Al-Nassr']
+    },
     milestones: [
-      'Começou no Sporting CP e se destacou rapidamente no Manchester United.',
-      'Ganhou cinco Champions League, sendo quatro pelo Real Madrid.',
-      'É o maior artilheiro da história da Champions League, com 140 gols.',
-      'Marcou 450 gols oficiais pelo Real Madrid.',
-      'É o maior artilheiro de seleções masculinas, com 146 gols por Portugal.',
-      'Conquistou a Euro 2016 e a Nations League por Portugal.',
-      'Ultrapassou 970 gols oficiais por clubes e Seleção.'
-    ],
-    sources: [
-      'Wikipedia: conquistas e totais recentes',
-      'FOX Sports: gols por clube e Portugal',
-      'Transfermarkt: jogos/gols por Portugal'
+      { year: '2008', text: 'Primeira Bola de Ouro pelo Manchester United.' },
+      { year: '2009–2018', text: 'Período histórico no Real Madrid, rivalizando com o Barcelona.' },
+      { year: '2016', text: 'Campeão da Euro por Portugal.' },
+      { year: '2018', text: 'Quinta Champions League da carreira.' }
     ]
   }
 ];
 
-window.DATA_INFO = {
-  updatedAt: '07/07/2026',
-  note: 'Dados iniciais para portfólio. Algumas bases podem divergir por critérios de contagem; revise o data.js para manter o projeto sempre atualizado.'
+const barcaEra = {
+  title: 'Era Barcelona: Neymar & Messi',
+  subtitle: 'Um site com visual inspirado em aplicativo esportivo, usando azul-grená, cards arredondados, dashboard e comparação de dados.',
+  msn: {
+    seasons: '2014–2017',
+    trio: 'Messi • Suárez • Neymar',
+    goalsTogether: 364,
+    note: 'O trio MSN ficou marcado por intensidade, criatividade e muitos gols em jogos decisivos.'
+  }
 };

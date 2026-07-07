@@ -1,76 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Legends Stats | Dados dos Jogadores</title>
-  <meta name="description" content="Dados, gols e marcos da carreira de Neymar, Messi e Cristiano Ronaldo." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barça Legends | Dados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="header">
-    <div class="container nav">
-      <a class="logo" href="index.html" aria-label="Página inicial">
-        <span class="logo-mark">⚽</span>
-        <span>Legends Stats</span>
-      </a>
-      <nav class="nav-links" aria-label="Navegação principal">
-        <a class="active" href="index.html">Dados</a>
-        <a href="dashboard.html">Dashboard</a>
-      </nav>
-    </div>
+  <div class="page-bg"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Página inicial">
+      <span class="brand-badge">FCB</span>
+      <span>
+        <strong>Barça Legends</strong>
+        <small>Neymar • Messi • Comparativos</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Menu principal">
+      <a class="active" href="index.html">Dados</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
   </header>
 
   <main>
-    <section class="container hero">
-      <div>
-        <span class="eyebrow">Base editável para GitHub Pages</span>
-        <h1>Dados e marcos dos <span class="title-gradient">craques</span></h1>
-        <p class="lead">
-          Projeto estático em HTML, CSS e JavaScript com cards, busca, filtros e uma base simples para incluir novos jogadores futuramente.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#jogadores">Ver jogadores</a>
-          <a class="btn btn-secondary" href="dashboard.html">Abrir dashboard</a>
+    <section class="hero-grid section-pad">
+      <div class="phone-card intro-phone reveal-card">
+        <div class="phone-image-overlay"></div>
+        <div class="barca-shield large-shield">
+          <span>FCB</span>
         </div>
+        <p class="eyebrow">Bem-vindo ao universo blaugrana</p>
+        <h1>Detalhes da era Neymar e Messi no Barcelona</h1>
+        <p class="hero-copy">
+          Dados, marcos, gols e títulos em uma interface com aparência de app esportivo, inspirada no estilo azul-grená da imagem enviada.
+        </p>
+        <a class="primary-btn" href="#players-data">Ver jogadores</a>
       </div>
 
-      <aside class="hero-panel" aria-label="Ranking de gols">
-        <div class="panel-title">
-          <h2>Ranking por gols</h2>
-          <span class="live-dot" id="updatedAt">Atualizado</span>
+      <div class="phone-card match-phone reveal-card delay-1" aria-label="Card estilo aplicativo de futebol">
+        <div class="phone-top">
+          <span class="hamburger" aria-hidden="true"></span>
+          <div class="mini-brand">
+            <span class="mini-shield">FCB</span>
+            <b>FC Barcelona</b>
+          </div>
         </div>
-        <div class="mini-ranking" id="rankingList"></div>
-      </aside>
+
+        <div class="match-hero">
+          <p class="competition">La Liga • Champions • Copa</p>
+          <span class="stadium">Camp Nou</span>
+          <h2>NEYMAR 11<br><em>&</em> MESSI 10</h2>
+
+          <div class="versus-card">
+            <article>
+              <span class="player-orb red">11</span>
+              <strong>Neymar</strong>
+              <small>105 gols pelo Barça</small>
+            </article>
+            <span class="game-time">MSN ERA</span>
+            <article>
+              <span class="player-orb blue">10</span>
+              <strong>Messi</strong>
+              <small>672 gols pelo Barça</small>
+            </article>
+          </div>
+
+          <a class="ticket-btn" href="dashboard.html">Abrir Dashboard</a>
+        </div>
+
+        <div class="schedule-panel">
+          <h3>Marcos em destaque</h3>
+          <div class="schedule-item">
+            <span>2014/15</span>
+            <b>Triplete histórico</b>
+            <small>La Liga + Copa do Rei + Champions</small>
+          </div>
+          <div class="schedule-item">
+            <span>2016/17</span>
+            <b>Remontada no Camp Nou</b>
+            <small>Neymar foi decisivo contra o PSG</small>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section class="container section" id="jogadores">
+    <section class="section-pad compact-top">
       <div class="section-title">
-        <div>
-          <h2>Jogadores cadastrados</h2>
-          <p>Veja os principais marcos, gols por clubes/seleção e resumo da carreira profissional.</p>
+        <p class="eyebrow">Dados editáveis</p>
+        <h2>Resumo dos jogadores</h2>
+        <p>Os números ficam no arquivo <code>data.js</code>. Para colocar novos atletas depois, basta copiar um bloco de jogador e alterar os dados.</p>
+      </div>
+      <div id="players-data" class="players-grid"></div>
+    </section>
+
+    <section class="section-pad split-section">
+      <div class="glass-panel">
+        <p class="eyebrow">MSN</p>
+        <h2>Messi, Suárez e Neymar</h2>
+        <p>
+          O trio MSN juntou velocidade, drible, finalização e visão de jogo. No site, Neymar e Messi recebem destaque na página de dados e no dashboard comparativo.
+        </p>
+        <div class="stat-strip">
+          <span><b>2014–2017</b><small>período marcante</small></span>
+          <span><b>364</b><small>gols do trio</small></span>
+          <span><b>Camp Nou</b><small>palco principal</small></span>
         </div>
       </div>
 
-      <div class="toolbar" aria-label="Filtros">
-        <input class="input" id="searchInput" type="search" placeholder="Buscar por jogador, país ou clube..." />
-        <select class="select" id="sortSelect">
-          <option value="goals-desc">Mais gols</option>
-          <option value="goals-asc">Menos gols</option>
-          <option value="ballon-desc">Mais Bolas de Ouro</option>
-          <option value="name-asc">Nome A-Z</option>
-        </select>
+      <div class="timeline-panel">
+        <h3>Linha do tempo</h3>
+        <div id="timeline-list"></div>
       </div>
-
-      <div class="grid" id="playersGrid"></div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">
-      <span>Legends Stats — projeto estático para portfólio.</span>
-      <span>Edite os dados no arquivo <strong>data.js</strong>.</span>
-    </div>
+  <footer class="site-footer">
+    <p>Projeto em HTML, CSS e JavaScript puro. Layout responsivo para GitHub Pages.</p>
   </footer>
 
   <script src="data.js"></script>

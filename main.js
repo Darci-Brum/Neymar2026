@@ -1,126 +1,80 @@
-const players = window.PLAYERS || [];
-const dataInfo = window.DATA_INFO || {};
+const playersGrid = document.querySelector('#players-data');
+const timelineList = document.querySelector('#timeline-list');
 
-const formatter = new Intl.NumberFormat('pt-BR');
-const grid = document.querySelector('#playersGrid');
-const rankingList = document.querySelector('#rankingList');
-const searchInput = document.querySelector('#searchInput');
-const sortSelect = document.querySelector('#sortSelect');
-const updatedAt = document.querySelector('#updatedAt');
-
-if (updatedAt && dataInfo.updatedAt) {
-  updatedAt.textContent = `Atualizado em ${dataInfo.updatedAt}`;
+function formatNumber(value) {
+  return new Intl.NumberFormat('pt-BR').format(value);
 }
 
-function bySort(option) {
-  return (a, b) => {
-    switch (option) {
-      case 'goals-asc':
-        return a.stats.totalGoals - b.stats.totalGoals;
-      case 'ballon-desc':
-        return b.stats.ballonDor - a.stats.ballonDor;
-      case 'name-asc':
-        return a.name.localeCompare(b.name, 'pt-BR');
-      case 'goals-desc':
-      default:
-        return b.stats.totalGoals - a.stats.totalGoals;
-    }
-  };
-}
-
-function getFilteredPlayers() {
-  const term = (searchInput?.value || '').trim().toLowerCase();
-  const sort = sortSelect?.value || 'goals-desc';
-
-  return players
-    .filter((player) => {
-      const clubs = player.clubs.map((club) => club.name).join(' ');
-      const searchable = `${player.name} ${player.fullName} ${player.country} ${player.currentClub} ${clubs}`.toLowerCase();
-      return searchable.includes(term);
-    })
-    .sort(bySort(sort));
-}
-
-function renderRanking() {
-  if (!rankingList) return;
-
-  rankingList.innerHTML = players
-    .slice()
-    .sort((a, b) => b.stats.totalGoals - a.stats.totalGoals)
-    .map((player, index) => `
-      <div class="rank-item">
-        <div class="avatar" style="--avatar-color: ${player.accent}">${player.initials}</div>
-        <div class="rank-info">
-          <strong>${index + 1}. ${player.name}</strong>
-          <span>${player.country} • ${player.currentClub}</span>
-        </div>
-        <div class="rank-goals">${formatter.format(player.stats.totalGoals)}</div>
-      </div>
-    `)
+function createPlayerCard(player) {
+  const clubs = player.career.clubs.map((club) => `<span>${club}</span>`).join('');
+  const milestones = player.milestones
+    .map((item) => `<li><b>${item.year}</b><span>${item.text}</span></li>`)
     .join('');
+
+  return `
+    <article class="player-card" style="--accent:${player.accent}; --secondary:${player.secondary}">
+      <div class="player-card-head">
+        <span class="shirt-number">${player.number}</span>
+        <div>
+          <p class="eyebrow">${player.country}</p>
+          <h3>${player.name}</h3>
+          <small>${player.nickname}</small>
+        </div>
+      </div>
+
+      <p class="player-bio">${player.shortBio}</p>
+
+      <div class="mini-stats">
+        <span><b>${formatNumber(player.barcelona.matches)}</b><small>Jogos Barça</small></span>
+        <span><b>${formatNumber(player.barcelona.goals)}</b><small>Gols Barça</small></span>
+        <span><b>${formatNumber(player.barcelona.assists)}</b><small>Assistências</small></span>
+        <span><b>${formatNumber(player.barcelona.titles)}</b><small>Títulos</small></span>
+      </div>
+
+      <div class="highlight-box">
+        <b>${player.barcelona.seasons}</b>
+        <span>${player.barcelona.highlight}</span>
+      </div>
+
+      <div class="club-tags">${clubs}</div>
+
+      <details>
+        <summary>Ver principais marcos</summary>
+        <ul class="milestone-list">${milestones}</ul>
+      </details>
+    </article>
+  `;
 }
 
 function renderPlayers() {
-  if (!grid) return;
-  const filteredPlayers = getFilteredPlayers();
+  playersGrid.innerHTML = players.map(createPlayerCard).join('');
+}
 
-  if (!filteredPlayers.length) {
-    grid.innerHTML = '<div class="empty">Nenhum jogador encontrado com esse filtro.</div>';
-    return;
-  }
+function renderTimeline() {
+  const selected = players
+    .filter((player) => ['neymar', 'messi'].includes(player.id))
+    .flatMap((player) =>
+      player.milestones.map((milestone) => ({
+        ...milestone,
+        player: player.name,
+        accent: player.accent
+      }))
+    );
 
-  grid.innerHTML = filteredPlayers
-    .map((player) => `
-      <article class="card" style="--player-color: ${player.accent}">
-        <div class="card-header">
-          <div class="avatar" style="--avatar-color: ${player.accent}">${player.initials}</div>
+  timelineList.innerHTML = selected
+    .map(
+      (item) => `
+        <article class="timeline-item" style="--accent:${item.accent}">
+          <span>${item.year}</span>
           <div>
-            <strong>${player.fullName}</strong>
-            <span>${player.country} • ${player.position}</span>
+            <b>${item.player}</b>
+            <p>${item.text}</p>
           </div>
-        </div>
-
-        <h3>${player.name}</h3>
-        <p class="summary">${player.summary}</p>
-
-        <div class="stat-strip">
-          <div class="stat-pill">
-            <strong>${formatter.format(player.stats.totalGoals)}</strong>
-            <span>gols totais</span>
-          </div>
-          <div class="stat-pill">
-            <strong>${formatter.format(player.stats.clubGoals)}</strong>
-            <span>gols por clubes</span>
-          </div>
-          <div class="stat-pill">
-            <strong>${formatter.format(player.stats.nationalGoals)}</strong>
-            <span>gols pela seleção</span>
-          </div>
-        </div>
-
-        <ul class="milestones">
-          ${player.milestones.map((item) => `<li>${item}</li>`).join('')}
-        </ul>
-
-        <div class="club-list">
-          ${player.clubs.map((club) => `
-            <div class="club-row">
-              <span><strong>${club.name}</strong> • ${club.period}</span>
-              <span>${formatter.format(club.goals)} gols</span>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="sources">
-          <strong>Fontes usadas:</strong> ${player.sources.join(' • ')}.
-        </div>
-      </article>
-    `)
+        </article>
+      `
+    )
     .join('');
 }
 
-searchInput?.addEventListener('input', renderPlayers);
-sortSelect?.addEventListener('change', renderPlayers);
-
-renderRanking();
 renderPlayers();
+renderTimeline();
