@@ -18,6 +18,9 @@ const TABLES = {
   photos: 'neymar_media_photos',
   videos: 'neymar_media_videos',
   transfers: 'neymar_transfers_contracts',
+  wealth: 'neymar_wealth_estimates',
+  assets: 'neymar_assets',
+  life: 'neymar_family_life',
   sources: 'neymar_sources'
 };
 
@@ -34,6 +37,8 @@ const navItems = [
   ['premios','Medalhas & Prêmios','premios.html'],
   ['adversarios','Adversários','adversarios.html'],
   ['transferencias','Transferências','transferencias.html'],
+  ['patrimonio','Patrimônio','patrimonio.html'],
+  ['vida','Vida atual','vida-atual.html'],
   ['midia','Fotos & Vídeos','midia.html'],
   ['supabase','Supabase','supabase.html']
 ];
@@ -87,6 +92,9 @@ async function loadAllData(){
     safeTable('photos', TABLES.photos),
     safeTable('videos', TABLES.videos),
     safeTable('transfers', TABLES.transfers),
+    safeTable('wealth', TABLES.wealth),
+    safeTable('assets', TABLES.assets),
+    safeTable('life', TABLES.life),
     safeTable('sources', TABLES.sources)
   ]);
   const totalRows = Object.values(state.data).reduce((acc, rows) => acc + (Array.isArray(rows) ? rows.length : 0), 0);
@@ -104,6 +112,8 @@ function showLoading(on){
   if(!on && el) el.remove();
 }
 function fmt(n){ return Number(n || 0).toLocaleString('pt-BR'); }
+function money(n, currency='USD', decimals=0){ return new Intl.NumberFormat('pt-BR', { style:'currency', currency, maximumFractionDigits:decimals, minimumFractionDigits:decimals }).format(Number(n || 0)); }
+function compactMoney(n, currency='USD'){ return new Intl.NumberFormat('pt-BR', { style:'currency', currency, notation:'compact', maximumFractionDigits:2 }).format(Number(n || 0)); }
 function esc(v=''){ return String(v ?? '').replace(/[&<>'"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m])); }
 function img(url, alt=''){
   if(!url) return `<div class="video-placeholder">Imagem não cadastrada no Supabase</div>`;
@@ -234,6 +244,87 @@ function renderMidia(){
 }
 function photoCard(p){ return `<article class="gallery-card">${img(p.image_url,p.title)}<div class="gallery-info"><span class="tag gold">${esc(p.tag)}</span><h3>${esc(p.title)}</h3><p>${esc(p.description||p.credit||'')}</p></div></article>`; }
 function videoCard(v){ return `<article class="card video-card"><div class="card-body">${v.embed_url?`<iframe src="${esc(v.embed_url)}" title="${esc(v.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`:`<div class="video-placeholder">${esc(v.platform||'Vídeo externo')}<br><small>Link externo</small></div>`}<div class="tag-row"><span class="tag gold">${esc(v.classification)}</span><span class="tag">${esc(v.phase)}</span></div><h3>${esc(v.title)}</h3><p>${esc(v.description)}</p>${v.external_url?`<a class="btn small" href="${esc(v.external_url)}" target="_blank" rel="noopener">Abrir vídeo</a>`:''}</div></article>`; }
+
+function renderPatrimonio(){
+  const counter=$('#wealth-counter'), rates=$('#wealth-rates'), note=$('#wealth-note');
+  const rows=list('wealth');
+  const w=rows[0] || null;
+  if(counter){
+    if(!w){ counter.innerHTML=empty('Cadastre neymar_wealth_estimates.'); }
+    else{
+      const annual = Number(w.annual_earnings_usd || 0);
+      const net = Number(w.net_worth_usd || 0);
+      const fx = Number(w.exchange_rate_brl || 1);
+      const base = w.base_date ? new Date(`${w.base_date}T00:00:00Z`) : new Date();
+      const perSecond = annual / 31536000;
+      const tick = () => {
+        const elapsed = Math.max(0, (Date.now() - base.getTime()) / 1000);
+        const estimate = net + (perSecond * elapsed);
+        counter.innerHTML = `
+          <article class="wealth-card primary">
+            <span class="tag gold">${esc(w.label || 'Patrimônio estimado')}</span>
+            <strong class="money-big">${money(estimate, 'USD')}</strong>
+            <small>${money(estimate * fx, 'BRL')} • câmbio editável no Supabase: ${fx.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2})}</small>
+            <p>${esc(w.method_note || 'Estimativa matemática com base nos valores cadastrados no Supabase.')}</p>
+            <div class="tag-row"><span class="tag">Base: ${esc(w.base_date || 'não informada')}</span><span class="tag">Fonte: ${esc(w.source_label || 'não informada')}</span></div>
+            ${w.source_url ? `<a class="btn small" href="${esc(w.source_url)}" target="_blank" rel="noopener">Abrir fonte</a>` : ''}
+          </article>`;
+      };
+      tick();
+      if(window.__wealthTimer) clearInterval(window.__wealthTimer);
+      window.__wealthTimer = setInterval(tick, 1000);
+    }
+  }
+  if(rates){
+    if(!w){ rates.innerHTML=''; }
+    else{
+      const annual=Number(w.annual_earnings_usd||0); const fx=Number(w.exchange_rate_brl||1);
+      const values=[
+        ['Por segundo', annual/31536000],
+        ['Por minuto', annual/525600],
+        ['Por hora', annual/8760],
+        ['Por dia', annual/365],
+        ['Por mês', annual/12],
+        ['Por ano', annual]
+      ];
+      rates.innerHTML=values.map(([label,val])=>`<article class="rate-card"><span>${label}</span><strong>${money(val,'USD', label==='Por segundo'?2:0)}</strong><small>${money(val*fx,'BRL', label==='Por segundo'?2:0)}</small></article>`).join('');
+    }
+  }
+  if(note && w){ note.innerHTML=`<strong>Importante:</strong> patrimônio real não é público/auditado. Este contador não consulta banco em tempo real a cada segundo; ele calcula uma projeção visual no navegador usando <code>net_worth_usd</code>, <code>annual_earnings_usd</code>, <code>exchange_rate_brl</code> e <code>base_date</code> cadastrados no Supabase. Atualize esses campos quando quiser trocar a estimativa.`; }
+
+  const filters=$('#assets-filters'), grid=$('#assets-grid');
+  if(filters&&grid){
+    const assets=list('assets');
+    if(!assets.length){ grid.innerHTML=empty('Cadastre neymar_assets.'); return; }
+    const cats=unique(assets,'category');
+    filters.innerHTML=cats.map((c,i)=>`<button class="filter-btn ${i===0?'active':''}" data-filter="${esc(c)}">${esc(c)}</button>`).join('');
+    const paint=(cat='Todos')=>{ const out=cat==='Todos'?assets:assets.filter(a=>a.category===cat); grid.innerHTML=out.length?out.map(assetCard).join(''):empty('Nenhum bem divulgado neste filtro.'); };
+    paint();
+    filters.addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return; $$('.filter-btn',filters).forEach(x=>x.classList.remove('active')); b.classList.add('active'); paint(b.dataset.filter);});
+  }
+}
+function assetCard(a){
+  return `<article class="card asset-card"><div class="card-media">${img(a.image_url,a.item_name)}</div><div class="card-body"><div class="tag-row"><span class="tag gold">${esc(a.category)}</span><span class="tag">${esc(a.status_label||'Divulgado publicamente')}</span></div><h3>${esc(a.item_name)}</h3><p>${esc(a.description)}</p><div class="asset-meta"><strong>${esc(a.estimated_value||'Valor não confirmado')}</strong><span>${esc(a.location||'Local não informado')}</span></div>${a.source_url?`<a class="btn small" href="${esc(a.source_url)}" target="_blank" rel="noopener">Fonte</a>`:''}</div></article>`;
+}
+function renderVidaAtual(){
+  const grid=$('#life-grid'), filters=$('#life-filters'), summary=$('#life-summary');
+  const rows=list('life');
+  const p=profile();
+  if(summary){
+    summary.innerHTML = `<article class="kpi-card"><strong>${esc(p.birth || '—')}</strong><span>Data de nascimento</span><small>${esc(p.birthplace || 'Mogi das Cruzes, SP')}</small></article><article class="kpi-card"><strong>${esc(p.position || 'Atacante')}</strong><span>Posição</span><small>${esc(p.dominant_foot || 'Pé direito')} • ${esc(p.height || '')}</small></article><article class="kpi-card"><strong>Santos</strong><span>Clube atual</span><small>Contrato e contexto atual cadastrados no Supabase.</small></article>`;
+  }
+  if(!grid||!filters) return;
+  if(!rows.length){ grid.innerHTML=empty('Cadastre neymar_family_life.'); return; }
+  const cats=unique(rows,'section');
+  filters.innerHTML=cats.map((c,i)=>`<button class="filter-btn ${i===0?'active':''}" data-filter="${esc(c)}">${esc(c)}</button>`).join('');
+  const paint=(cat='Todos')=>{ const out=cat==='Todos'?rows:rows.filter(r=>r.section===cat); grid.innerHTML=out.length?out.map(lifeCard).join(''):empty('Nenhum item neste filtro.'); };
+  paint();
+  filters.addEventListener('click',e=>{const b=e.target.closest('button'); if(!b)return; $$('.filter-btn',filters).forEach(x=>x.classList.remove('active')); b.classList.add('active'); paint(b.dataset.filter);});
+}
+function lifeCard(l){
+  return `<article class="card life-card"><div class="card-media">${img(l.image_url,l.title)}</div><div class="card-body"><div class="tag-row"><span class="tag gold">${esc(l.section)}</span><span class="tag">${esc(l.status_label||'Info pública')}</span></div><h3>${esc(l.title)}</h3><div class="life-value">${esc(l.value||'')}</div><p>${esc(l.description||'')}</p><div class="family-meta"><span>${esc(l.date_label||'')}</span>${l.source_url?`<a href="${esc(l.source_url)}" target="_blank" rel="noopener">${esc(l.source_label||'Fonte')}</a>`:''}</div></div></article>`;
+}
+
 async function renderSupabasePage(){
   renderStatus();
   const info=$('#supabase-info'); if(info){ info.innerHTML=`<article class="kpi-card"><strong>${state.status.connected?'ON':'OFF'}</strong><span>Status</span><small>${esc(state.status.message)}</small></article><article class="kpi-card"><strong>${state.status.loaded}</strong><span>Tabelas carregadas</span><small>${state.status.errors.length} erro(s) de leitura.</small></article><article class="kpi-card"><strong>${Object.values(state.data).reduce((a,r)=>a+(Array.isArray(r)?r.length:0),0)}</strong><span>Registros lidos</span><small>Todo o conteúdo vem do Supabase.</small></article>`; }
@@ -252,6 +343,8 @@ async function init(){
   if(page==='premios') renderPremios();
   if(page==='adversarios') renderAdversarios();
   if(page==='transferencias') renderTransferencias();
+  if(page==='patrimonio') renderPatrimonio();
+  if(page==='vida') renderVidaAtual();
   if(page==='midia') renderMidia();
   if(page==='supabase') renderSupabasePage();
 }

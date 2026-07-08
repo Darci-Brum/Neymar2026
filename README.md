@@ -91,3 +91,37 @@ sql/03_grants_rls_media_hotfix.sql
 ```
 
 Ele aplica `GRANT`, recria as policies públicas de leitura e reinsere/atualiza fotos, vídeos e fontes de mídia sem apagar seus registros.
+
+## Atualização: Patrimônio, bens e vida atual
+
+Esta versão adiciona duas novas páginas:
+
+- `patrimonio.html`: patrimônio estimado, contador por segundo/minuto/hora/dia/mês/ano e bens divulgados publicamente.
+- `vida-atual.html`: data de nascimento, clube atual, companheira, filhos, pais e família.
+
+### Como ativar no seu Supabase já existente
+
+Se você já rodou o SQL anterior e o site está funcionando, rode apenas:
+
+```text
+sql/04_patrimonio_vida_atual.sql
+```
+
+Esse arquivo cria e popula as tabelas:
+
+- `neymar_wealth_estimates`
+- `neymar_assets`
+- `neymar_family_life`
+
+Ele também libera `GRANT SELECT` e políticas RLS públicas de leitura para o GitHub Pages.
+
+### Observação importante sobre patrimônio
+
+O patrimônio real de Neymar não é público/auditado. O contador usa uma estimativa cadastrada no Supabase e calcula uma projeção visual usando:
+
+- `net_worth_usd`
+- `annual_earnings_usd`
+- `exchange_rate_brl`
+- `base_date`
+
+Para atualizar, edite esses campos diretamente na tabela `neymar_wealth_estimates`.
