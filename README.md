@@ -75,3 +75,8 @@ As fontes também foram cadastradas na tabela `neymar_sources`, incluindo Transf
 ## Fotos com companheiros
 
 A seed inclui fotos de Neymar com Messi e Suárez na fase MSN, usando URLs externas do FC Barcelona e da LALIGA em `neymar_media_photos`, filtro **Companheiros/MSN** na aba de mídia.
+
+
+## Correção 08/07/2026
+
+O arquivo SQL foi ajustado para remover slug duplicado na tabela `neymar_awards`. Se você já tentou executar a versão anterior e recebeu erro de `ON CONFLICT DO UPDATE command cannot affect row a second time`, execute novamente `sql/supabase_full_setup.sql` desta versão corrigida.
