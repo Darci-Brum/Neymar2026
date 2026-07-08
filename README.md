@@ -125,3 +125,32 @@ O patrimônio real de Neymar não é público/auditado. O contador usa uma estim
 - `base_date`
 
 Para atualizar, edite esses campos diretamente na tabela `neymar_wealth_estimates`.
+
+## Correção das imagens do patrimônio
+
+Se a página `patrimonio.html` mostrar “Imagem não cadastrada no Supabase”, significa que a tabela `neymar_assets` existe, mas o campo `image_url` dos bens está vazio.
+
+Para corrigir em um banco que já está criado, rode apenas:
+
+```text
+sql/05_imagens_patrimonio_hotfix.sql
+```
+
+Esse hotfix preenche as imagens dos imóveis, iate, jato e carros divulgados publicamente. Algumas imagens são fotos de reportagens sobre o bem; outras são imagens públicas do modelo/local citado quando não existe foto oficial/auditada disponível.
+
+Depois de executar o SQL, atualize o GitHub Pages com Ctrl + F5.
+
+
+## Atualização visual: Santos + Barcelona + Seleção
+
+Esta versão muda a tipografia e a paleta para um tema mais focado nas fases **Santos**, **Barcelona** e **Seleção Brasileira**. Também adiciona uma faixa superior com os escudos de todos os clubes profissionais em que Neymar jogou, mais a Seleção Brasileira.
+
+Para quem já executou os SQLs anteriores, rode apenas:
+
+```text
+sql/06_tema_escudos_hotfix.sql
+```
+
+Depois envie todos os arquivos atualizados para o GitHub Pages e recarregue o site com **Ctrl + F5**.
+
+Os escudos ficam na tabela `neymar_team_crests`, então você pode trocar URLs, nomes, períodos e ordem diretamente no Supabase.

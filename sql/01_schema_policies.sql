@@ -282,3 +282,28 @@ create policy "public read neymar_transfers_contracts" on neymar_transfers_contr
 create policy "public read neymar_sources" on neymar_sources for select using (true);
 create policy "public insert site_feedback" on site_feedback for insert with check (true);
 create policy "public insert site_page_views" on site_page_views for insert with check (true);
+
+
+-- Tabela da faixa superior de escudos/fases
+-- 06_tema_escudos_hotfix.sql
+-- Rode este arquivo no Supabase SQL Editor para adicionar a faixa de escudos no topo
+-- e cadastrar os times/fases principais de Neymar Jr. O site lê esta tabela via REST API.
+
+create table if not exists neymar_team_crests (
+  slug text primary key,
+  team_name text not null,
+  abbreviation text,
+  period_label text,
+  focus_label text,
+  logo_url text,
+  theme_color text,
+  link_url text,
+  sort_order int default 0,
+  updated_at timestamptz default now()
+);
+
+alter table neymar_team_crests enable row level security;
+drop policy if exists "public read neymar_team_crests" on neymar_team_crests;
+create policy "public read neymar_team_crests" on neymar_team_crests for select using (true);
+grant select on neymar_team_crests to anon, authenticated;
+

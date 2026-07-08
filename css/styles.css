@@ -1,22 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root{
-  --bg:#0a0b1b;
-  --bg2:#111331;
-  --panel:#16183a;
+  --bg:#050711;
+  --bg2:#071b45;
+  --panel:#11172a;
   --card:#ffffff;
-  --text:#f8f8ff;
-  --muted:#aeb3cc;
-  --ink:#121426;
-  --ink2:#4f5470;
-  --blue:#172b8f;
-  --navy:#10122d;
-  --red:#b91545;
-  --gold:#ffc72c;
-  --gold2:#f4b400;
-  --line:rgba(255,255,255,.12);
-  --shadow:0 24px 70px rgba(0,0,0,.28);
+  --text:#fbfbff;
+  --muted:#c5c9d6;
+  --ink:#071125;
+  --ink2:#4c5364;
+  --barca-blue:#004D98;
+  --barca-red:#A50044;
+  --santos-black:#050505;
+  --brazil-green:#009B3A;
+  --brazil-yellow:#FFDF00;
+  --blue:#004D98;
+  --navy:#071125;
+  --red:#A50044;
+  --gold:#FFDF00;
+  --gold2:#FFC400;
+  --line:rgba(255,255,255,.13);
+  --shadow:0 24px 70px rgba(0,0,0,.25);
   --radius:24px;
-  --container:1180px;
+  --container:1220px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -53,3 +59,38 @@ table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;color
 @media(max-width:620px){.container{width:min(100% - 24px,var(--container))}.nav{height:74px}.logo small{display:none}.hero{padding:58px 0}.hero h1{letter-spacing:-1.5px}.grid.three,.grid.four,.kpi-grid{grid-template-columns:1fr}.phone-stats{grid-template-columns:1fr}.card-media{height:220px}.nav-links{top:74px}.bar-row{gap:8px}th,td{padding:12px}.section{padding:56px 0}}
 /* Patrimônio e vida atual */
 .wealth-card.primary{background:linear-gradient(135deg,#fff,#fff7d6);border:1px solid rgba(18,20,38,.08);box-shadow:0 24px 70px rgba(20,22,55,.12);border-radius:26px;padding:30px;color:var(--ink);margin-bottom:22px}.money-big{display:block;font-size:clamp(2.6rem,7vw,6rem);line-height:1;letter-spacing:-3px;color:var(--red);margin:12px 0}.wealth-card small{display:block;color:var(--ink2);font-weight:800;margin-bottom:16px}.wealth-card p{max-width:980px;line-height:1.7;color:var(--ink2)}.rate-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:24px 0}.rate-card{background:#fff;border:1px solid rgba(18,20,38,.08);box-shadow:0 18px 50px rgba(20,22,55,.07);border-radius:20px;padding:18px}.rate-card span{display:block;text-transform:uppercase;font-size:.68rem;letter-spacing:.8px;font-weight:900;color:var(--ink2)}.rate-card strong{display:block;font-size:1.45rem;color:var(--red);margin:7px 0 4px}.rate-card small{font-weight:800;color:#5b6078}.wealth-note{margin-top:16px}.asset-meta{display:grid;gap:6px;background:#f6f7fb;border-radius:16px;padding:14px;margin:14px 0}.asset-meta strong{color:var(--red);font-size:1rem}.asset-meta span{font-weight:800;color:var(--ink2);font-size:.82rem}.life-value{font-weight:900;color:var(--red);font-size:1.1rem;margin:10px 0}.family-meta{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-top:14px;padding-top:14px;border-top:1px solid #edf0f7;font-weight:800;color:var(--ink2);font-size:.82rem}.family-meta a{color:var(--red)}.asset-card .card-media,.life-card .card-media{background:linear-gradient(135deg,#10122d,#b91545)}.asset-card.missing-img .card-media,.life-card.missing-img .card-media{display:none}@media(max-width:1100px){.rate-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.rate-grid{grid-template-columns:1fr}.money-big{letter-spacing:-1.5px}}
+
+
+.media-credit{display:block;margin-top:12px;color:#6c718b;font-weight:800;font-size:.72rem;line-height:1.45}.asset-card .card-media .video-placeholder{height:100%;border-radius:0}.asset-card .card-media{position:relative}
+
+
+/* =========================================================
+   TEMA 2026 — Santos + Barcelona + Seleção Brasileira
+   Foco visual: letras mais fortes, escudos no topo e cores
+   inspiradas nas principais fases da carreira de Neymar Jr.
+========================================================= */
+body{
+  font-family:Inter,Montserrat,system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% -10%,rgba(255,223,0,.20),transparent 24%),
+    radial-gradient(circle at 74% 6%,rgba(0,77,152,.35),transparent 30%),
+    linear-gradient(135deg,#050711 0%,#071125 36%,#3f061f 72%,#061f13 100%);
+}
+h1,h2,h3,.logo,.btn,.filter-btn,th,.eyebrow,.kpi-card span,.bar-label,.award-class,.player-badge{
+  font-family:'Bebas Neue',Inter,Montserrat,sans-serif;
+  letter-spacing:.9px;
+}
+.logo{letter-spacing:.8px}.logo small{font-family:Inter,Montserrat,sans-serif;letter-spacing:2.6px}.logo-mark{border-radius:999px;background:linear-gradient(145deg,#fff,#ffdf00 52%,#009b3a);color:#071125;box-shadow:0 14px 32px rgba(255,223,0,.24)}
+.topbar{background:rgba(6,8,23,.88);border-bottom:0;box-shadow:0 14px 45px rgba(0,0,0,.18)}
+.topbar:after{content:"";display:block;height:4px;background:linear-gradient(90deg,#ffffff 0 16%,#050505 16% 26%,#004d98 26% 48%,#a50044 48% 70%,#009b3a 70% 85%,#ffdf00 85% 100%)}
+.nav{height:78px}.nav-links a{font-size:.82rem;color:#eef1fb;border:1px solid transparent}.nav-links a:hover,.nav-links a.active{background:linear-gradient(135deg,rgba(255,223,0,.22),rgba(255,255,255,.08));border-color:rgba(255,223,0,.24);color:#fff}
+.team-strip{border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);backdrop-filter:blur(18px)}
+.team-strip-inner{min-height:74px;display:flex;align-items:center;gap:12px;overflow-x:auto;padding:10px 0;scrollbar-width:thin}
+.team-chip{display:flex;align-items:center;gap:12px;min-width:max-content;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);transition:.2s ease;position:relative;overflow:hidden}
+.team-chip:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--team-color,rgba(255,223,0,.2)),transparent 72%);opacity:.35;pointer-events:none}.team-chip:hover{transform:translateY(-2px);border-color:rgba(255,223,0,.35)}
+.crest-badge{width:42px;height:42px;border-radius:999px;background:#fff;display:grid;place-items:center;position:relative;overflow:hidden;box-shadow:0 8px 18px rgba(0,0,0,.18);flex:0 0 auto}.crest-badge img{width:30px;height:30px;object-fit:contain;position:relative;z-index:2}.crest-fallback{position:absolute;inset:0;display:grid;place-items:center;color:#071125;font-weight:900;font-size:.7rem;font-family:Inter,Montserrat,sans-serif;background:linear-gradient(145deg,#fff,#ffe066)}
+.team-info{position:relative;z-index:1;display:flex;flex-direction:column;line-height:1.1}.team-info strong{font-size:.86rem;text-transform:uppercase}.team-info span{font-size:.66rem;color:#cfd3e5;font-family:Inter,Montserrat,sans-serif;font-weight:800}.team-info small{font-size:.62rem;color:#ffdf00;font-family:Inter,Montserrat,sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.8px}
+.hero{background:radial-gradient(circle at 18% 18%,rgba(255,223,0,.17),transparent 28%),radial-gradient(circle at 74% 18%,rgba(0,77,152,.40),transparent 28%),linear-gradient(130deg,rgba(5,5,5,.96),rgba(0,77,152,.80) 42%,rgba(165,0,68,.78) 72%,rgba(0,155,58,.40))}.hero:before{background-image:linear-gradient(90deg,rgba(255,223,0,.13) 1px,transparent 1px),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:74px 74px}.hero h1,.section-title h2{font-family:'Bebas Neue',Inter,sans-serif;letter-spacing:.4px}.hero h1{font-size:clamp(3.5rem,8.5vw,7.4rem);line-height:.84}.eyebrow{color:#ffdf00}.lead{color:#eef1fb}.btn{border-radius:999px;background:linear-gradient(135deg,#ffdf00,#ffc400);color:#071125}.btn.secondary{background:linear-gradient(135deg,rgba(0,77,152,.25),rgba(165,0,68,.25));border-color:rgba(255,255,255,.18)}
+.phone-card{border-radius:38px;background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(0,77,152,.1),rgba(165,0,68,.14))}.phone-screen{border-radius:28px}.player-number{background:linear-gradient(135deg,#ffdf00,#009b3a);color:#071125}.phone-stat strong{color:#ffdf00}
+.section.light{background:#f5f7fb}.section.white{background:#fff}.card,.light .kpi-card,.white .kpi-card{border-color:rgba(7,17,37,.08);box-shadow:0 18px 52px rgba(7,17,37,.08)}.card-media{background:linear-gradient(135deg,#004d98,#a50044 55%,#009b3a)}.card h3,.kpi-card strong,.bar-value,.mini-stat strong{color:#071125}.light .kpi-card strong,.white .kpi-card strong{color:#004d98}.tag.gold{background:rgba(255,223,0,.24);color:#5d4300}.filter-btn.active,.filter-btn:hover{background:linear-gradient(135deg,#ffdf00,#ffc400);color:#071125;border-color:#ffdf00}.bar-fill{background:linear-gradient(90deg,#ffdf00,#004d98 50%,#a50044)}.timeline-dot{background:#ffdf00;border-color:#071125}.timeline-box strong{color:#ffdf00}.footer{background:linear-gradient(135deg,#050505,#071125 45%,#3b061f)}
+@media (max-width:920px){.nav{height:auto;min-height:74px;padding:12px 0}.team-strip-inner{padding:8px 0}.team-chip{padding:8px 11px}.crest-badge{width:36px;height:36px}.crest-badge img{width:26px;height:26px}.team-info strong{font-size:.78rem}.hero h1{font-size:clamp(3rem,16vw,5rem)}}

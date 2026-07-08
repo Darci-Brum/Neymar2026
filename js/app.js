@@ -21,6 +21,7 @@ const TABLES = {
   wealth: 'neymar_wealth_estimates',
   assets: 'neymar_assets',
   life: 'neymar_family_life',
+  teamCrests: 'neymar_team_crests',
   sources: 'neymar_sources'
 };
 
@@ -95,6 +96,7 @@ async function loadAllData(){
     safeTable('wealth', TABLES.wealth),
     safeTable('assets', TABLES.assets),
     safeTable('life', TABLES.life),
+    safeTable('teamCrests', TABLES.teamCrests),
     safeTable('sources', TABLES.sources)
   ]);
   const totalRows = Object.values(state.data).reduce((acc, rows) => acc + (Array.isArray(rows) ? rows.length : 0), 0);
@@ -117,7 +119,7 @@ function compactMoney(n, currency='USD'){ return new Intl.NumberFormat('pt-BR', 
 function esc(v=''){ return String(v ?? '').replace(/[&<>'"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m])); }
 function img(url, alt=''){
   if(!url) return `<div class="video-placeholder">Imagem não cadastrada no Supabase</div>`;
-  return `<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none';this.parentElement.classList.add('missing-img')">`;
+  return `<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<div class=&quot;video-placeholder&quot;>Imagem externa indisponível</div>'">`;
 }
 function profile(){ return (state.data.profile && state.data.profile[0]) || {}; }
 function list(key){ return Array.isArray(state.data[key]) ? state.data[key] : []; }
@@ -141,8 +143,23 @@ function initLayout(){
   const brandName = $('#brand-name'); if(brandName) brandName.textContent = p.short_name || 'Neymar Jr';
   const updated = $('#updated-label'); if(updated) updated.textContent = p.updated_at_label ? `Atualizado em ${p.updated_at_label}` : 'Dados do Supabase';
   renderStatus();
+  renderTeamCrests();
   renderSources();
 }
+
+function renderTeamCrests(){
+  const topbar = $('.topbar');
+  if(!topbar || $('#team-crest-strip')) return;
+  const rows = list('teamCrests');
+  if(!rows.length) return;
+  const html = `<div class="team-strip" id="team-crest-strip"><div class="container team-strip-inner">${rows.map(t => {
+    const abbr = esc(t.abbreviation || String(t.team_name || '').slice(0,3).toUpperCase());
+    const logo = t.logo_url ? `<img src="${esc(t.logo_url)}" alt="Escudo ${esc(t.team_name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '';
+    return `<a class="team-chip" href="${esc(t.link_url || 'clubes.html')}" style="--team-color:${esc(t.theme_color || '#ffdf00')}"><span class="crest-badge"><span class="crest-fallback">${abbr}</span>${logo}</span><span class="team-info"><strong>${esc(t.team_name)}</strong><span>${esc(t.period_label || '')}</span><small>${esc(t.focus_label || '')}</small></span></a>`;
+  }).join('')}</div></div>`;
+  topbar.insertAdjacentHTML('beforeend', html);
+}
+
 function renderStatus(){
   const el = $('#supabase-status');
   if(!el) return;
@@ -160,8 +177,8 @@ function renderHero(){
   const el = $('#hero-copy');
   if(!el) return;
   el.innerHTML = `
-    <p class="eyebrow">Arquivo premium • 100% Supabase</p>
-    <h1>${esc(p.short_name || 'Neymar Jr.')} em dados reais.</h1>
+    <p class="eyebrow">Santos • Barcelona • Seleção Brasileira • 100% Supabase</p>
+    <h1>${esc(p.short_name || 'Neymar Jr.')} em eras e conquistas.</h1>
     <p class="lead">${esc(p.bio || p.subtitle || 'Configure os dados no Supabase para preencher o site.')}</p>
     <div class="hero-actions"><a class="btn" href="clubes.html">Ver passagens</a><a class="btn secondary" href="midia.html">Fotos e vídeos</a></div>`;
   const mini = $('#hero-mini');
@@ -304,7 +321,8 @@ function renderPatrimonio(){
   }
 }
 function assetCard(a){
-  return `<article class="card asset-card"><div class="card-media">${img(a.image_url,a.item_name)}</div><div class="card-body"><div class="tag-row"><span class="tag gold">${esc(a.category)}</span><span class="tag">${esc(a.status_label||'Divulgado publicamente')}</span></div><h3>${esc(a.item_name)}</h3><p>${esc(a.description)}</p><div class="asset-meta"><strong>${esc(a.estimated_value||'Valor não confirmado')}</strong><span>${esc(a.location||'Local não informado')}</span></div>${a.source_url?`<a class="btn small" href="${esc(a.source_url)}" target="_blank" rel="noopener">Fonte</a>`:''}</div></article>`;
+  const credit = a.source_label ? `<small class="media-credit">Imagem/dado: ${esc(a.source_label)}</small>` : '';
+  return `<article class="card asset-card"><div class="card-media">${img(a.image_url,a.item_name)}</div><div class="card-body"><div class="tag-row"><span class="tag gold">${esc(a.category)}</span><span class="tag">${esc(a.status_label||'Divulgado publicamente')}</span></div><h3>${esc(a.item_name)}</h3><p>${esc(a.description)}</p>${credit}<div class="asset-meta"><strong>${esc(a.estimated_value||'Valor não confirmado')}</strong><span>${esc(a.location||'Local não informado')}</span></div>${a.source_url?`<a class="btn small" href="${esc(a.source_url)}" target="_blank" rel="noopener">Fonte</a>`:''}</div></article>`;
 }
 function renderVidaAtual(){
   const grid=$('#life-grid'), filters=$('#life-filters'), summary=$('#life-summary');
