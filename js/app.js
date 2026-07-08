@@ -113,7 +113,10 @@ function profile(){ return (state.data.profile && state.data.profile[0]) || {}; 
 function list(key){ return Array.isArray(state.data[key]) ? state.data[key] : []; }
 function unique(rows, field){ return ['Todos', ...new Set(rows.map(r => r[field]).filter(Boolean))]; }
 function empty(text='Nenhum dado encontrado no Supabase para esta seção.'){
-  return `<div class="empty"><strong>Sem dados.</strong><br>${esc(text)}<br><br>Confira se você executou <code>sql/supabase_full_setup.sql</code> no Supabase e se as policies de leitura pública estão ativas.</div>`;
+  const errors = state.status.errors && state.status.errors.length
+    ? `<br><br><strong>Diagnóstico da API:</strong><ul>${state.status.errors.slice(0,6).map(e => `<li>${esc(e)}</li>`).join('')}</ul>`
+    : '';
+  return `<div class="empty"><strong>Sem dados.</strong><br>${esc(text)}<br><br>Confira se existem registros na tabela correta, se o arquivo <code>sql/supabase_full_setup.sql</code> foi executado até o fim e se as permissões <code>GRANT</code> + <code>RLS SELECT</code> estão ativas.${errors}</div>`;
 }
 
 function initLayout(){

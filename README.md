@@ -80,3 +80,14 @@ A seed inclui fotos de Neymar com Messi e Suárez na fase MSN, usando URLs exter
 ## Correção 08/07/2026
 
 O arquivo SQL foi ajustado para remover slug duplicado na tabela `neymar_awards`. Se você já tentou executar a versão anterior e recebeu erro de `ON CONFLICT DO UPDATE command cannot affect row a second time`, execute novamente `sql/supabase_full_setup.sql` desta versão corrigida.
+
+
+## Correção rápida se aparecer “Sem dados” na página Fotos & Vídeos
+
+Se as tabelas existem no Supabase, mas o site mostra vazio, rode no SQL Editor o arquivo:
+
+```text
+sql/03_grants_rls_media_hotfix.sql
+```
+
+Ele aplica `GRANT`, recria as policies públicas de leitura e reinsere/atualiza fotos, vídeos e fontes de mídia sem apagar seus registros.
