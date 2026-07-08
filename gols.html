@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neymar Jr Archive | Gols</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="gols">
+  <header class="topbar"><div class="container nav"><a class="logo" href="index.html"><span class="logo-mark">NJR</span><span>Neymar Jr Archive<small>gols</small></span></a><button class="mobile-toggle" id="mobile-toggle">Menu</button><nav class="nav-links" id="nav-links"></nav></div></header>
+  <main>
+    <section class="hero"><div class="container hero-grid"><div><p class="eyebrow">Gols e classificações</p><h1>Pênaltis, faltas e gols decisivos.</h1><p class="lead">Área separada para tipos de gol, dados por fonte e cards filtráveis dos gols importantes.</p><div class="hero-actions"><a class="btn" href="adversarios.html">Times que levou gol</a><a class="btn secondary" href="clubes.html">Voltar aos clubes</a></div></div><div class="phone-card"><div class="phone-screen"><div class="phone-content" id="hero-mini"></div></div></div></div></section>
+    <section class="section light"><div class="container"><div class="section-title"><h2>Tipos de gol</h2><p>Dados públicos podem variar por competição coberta. Aqui o número de pênaltis vem do Transfermarkt e os tipos de finalização do StatBunker.</p></div><div class="card chart-card" id="goal-types"></div></div></section>
+    <section class="section"><div class="container"><div class="section-title"><h2>Gols históricos por classificação</h2><p>Filtre por clube ou Seleção.</p></div><div class="filter-panel" id="goals-filters"></div><div class="grid three" id="goals-grid"></div></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-grid"><div><strong>Neymar Jr Archive</strong><p>O arquivo data.js centraliza gols, tipos e fonte.</p></div><div class="supabase-status" id="supabase-status"></div><div class="footer-links" id="footer-sources"></div></div></footer>
+  <script src="js/data.js"></script><script src="js/supabase-config.js"></script><script src="js/supabase-service.js"></script><script src="js/app.js"></script>
+</body>
+</html>

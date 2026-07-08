@@ -3,237 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Site especial de Neymar Jr: clubes, Seleção Brasileira, títulos, gols, pênaltis, faltas, marcos e adversários." />
-  <title>Neymar Jr. | Carreira Completa</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Neymar Jr Archive | Dashboard</title>
+  <meta name="description" content="Dashboard premium da carreira de Neymar Jr com clubes, Seleção, gols, títulos, medalhas e prêmios." />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
-  <div class="cursor-glow" aria-hidden="true"></div>
-
-  <header class="site-header" id="topo">
-    <a href="#topo" class="brand" aria-label="Voltar ao início">
-      <span class="brand-mark">NJ</span>
-      <span>
-        <strong>Neymar Jr.</strong>
-        <small>Carreira • Gols • Títulos</small>
-      </span>
-    </a>
-
-    <button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav class="main-nav" aria-label="Menu principal">
-      <a href="#carreira">Carreira</a>
-      <a href="#clubes">Clubes</a>
-      <a href="#titulos">Títulos</a>
-      <a href="#gols">Gols</a>
-      <a href="#marcou-contra">Marcou contra</a>
-      <a href="#galeria">Galeria</a>
-    </nav>
+<body data-page="home">
+  <header class="topbar">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark">NJR</span><span>Neymar Jr Archive<small>career dashboard</small></span></a>
+      <button class="mobile-toggle" id="mobile-toggle">Menu</button>
+      <nav class="nav-links" id="nav-links"></nav>
+    </div>
   </header>
 
   <main>
-    <section class="hero section-pad">
-      <div class="hero-bg-lines" aria-hidden="true"></div>
-      <div class="hero-content container">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">Especial interativo • Neymar da Silva Santos Júnior</span>
-          <h1>Do Santos ao mundo: a trajetória completa do Menino Ney.</h1>
-          <p>
-            Um site premium e responsivo com passagens por clubes, Seleção Brasileira,
-            gols, pênaltis, faltas, títulos, momentos históricos e adversários contra quem marcou.
-          </p>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Site completo • Filtros por classificação</p>
+          <h1>A carreira de Neymar em dados, títulos e momentos.</h1>
+          <p class="lead">Um arquivo visual premium com passagens por Santos, Barcelona, PSG, Al-Hilal, retorno ao Santos e Seleção Brasileira. Dados separados em abas, filtros e tabelas editáveis.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#carreira">Ver carreira completa</a>
-            <a class="btn ghost" href="#marcou-contra">Times e seleções</a>
+            <a class="btn" href="clubes.html">Ver clubes</a>
+            <a class="btn secondary" href="premios.html">Medalhas & prêmios</a>
           </div>
         </div>
-
-        <aside class="hero-card reveal" aria-label="Resumo da carreira de Neymar">
-          <div class="phone-top">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="player-poster">
-            <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_-_FC_Barcelona_-_2015.jpg" alt="Neymar em partida pelo Barcelona em 2015" />
-            <div class="poster-gradient"></div>
-            <div class="poster-info">
-              <span class="tag">Auge europeu</span>
-              <h2>Neymar 10/11</h2>
-              <p>Santos • Barcelona • PSG • Al-Hilal • Brasil</p>
-            </div>
-          </div>
-          <div class="quick-stats" id="heroStats"></div>
-        </aside>
+        <div class="phone-card">
+          <div class="phone-screen"><div class="phone-content" id="hero-mini"></div></div>
+        </div>
       </div>
     </section>
 
-    <section class="strip-stats" aria-label="Números principais">
-      <div class="container stat-grid" id="topNumbers"></div>
+    <section class="section">
+      <div class="container">
+        <div class="section-title"><h2>Resumo geral</h2><p>Números principais com aviso de fonte. O arquivo <strong>js/data.js</strong> permite atualizar tudo sem mexer no layout.</p></div>
+        <div class="kpi-grid" id="kpis"></div>
+      </div>
     </section>
 
-    <section class="section-pad" id="carreira">
+    <section class="section light">
       <div class="container">
-        <div class="section-title reveal">
-          <span class="eyebrow">Linha do tempo</span>
-          <h2>Marcos principais da carreira</h2>
-          <p>Passagem por clubes, Seleção e noites que viraram história.</p>
-        </div>
+        <div class="section-title"><h2>Gols por passagem</h2><p>Comparativo visual dos gols por cada clube/fase cadastrada no banco de dados.</p></div>
+        <div class="card chart-card" id="club-chart"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-title"><h2>Linha do tempo</h2><p>Principais marcos separados por ano para navegação rápida.</p></div>
         <div class="timeline" id="timeline"></div>
       </div>
     </section>
 
-    <section class="section-pad dark-section" id="clubes">
+    <section class="section light">
       <div class="container">
-        <div class="section-title reveal">
-          <span class="eyebrow">Clubes e seleção</span>
-          <h2>Passagens profissionais</h2>
-          <p>Cards com período, função, números-base, feitos importantes e jogos memoráveis.</p>
-        </div>
-        <div class="club-grid" id="clubCards"></div>
-      </div>
-    </section>
-
-    <section class="section-pad" id="dashboard">
-      <div class="container dashboard-grid">
-        <div class="section-title reveal dashboard-copy">
-          <span class="eyebrow">Dashboard</span>
-          <h2>Comparativo visual dos números</h2>
-          <p>
-            Os gráficos usam os dados do arquivo <strong>js/data.js</strong>. Para atualizar ou adicionar novas estatísticas,
-            edite somente esse arquivo.
-          </p>
-          <div class="mini-note">
-            Observação: estatísticas totais podem variar conforme a fonte considera amistosos, categorias de base,
-            jogos oficiais e critérios de assistência.
-          </div>
-        </div>
-        <div class="charts-panel reveal">
-          <div class="chart-card">
-            <h3>Gols por passagem</h3>
-            <canvas id="goalsChart" width="540" height="320"></canvas>
-          </div>
-          <div class="chart-card">
-            <h3>Jogos por passagem</h3>
-            <canvas id="appsChart" width="540" height="320"></canvas>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-pad" id="titulos">
-      <div class="container">
-        <div class="section-title reveal">
-          <span class="eyebrow">Títulos e prêmios</span>
-          <h2>Conquistas coletivas e individuais</h2>
-          <p>Principais taças levantadas e premiações que marcaram a carreira.</p>
-        </div>
-        <div class="tabs reveal" role="tablist" aria-label="Títulos de Neymar">
-          <button class="tab active" data-tab="coletivos" role="tab" aria-selected="true">Coletivos</button>
-          <button class="tab" data-tab="individuais" role="tab" aria-selected="false">Individuais</button>
-          <button class="tab" data-tab="jogos" role="tab" aria-selected="false">Jogos históricos</button>
-        </div>
-        <div class="tab-panel active" id="coletivos"></div>
-        <div class="tab-panel" id="individuais"></div>
-        <div class="tab-panel" id="jogos"></div>
-      </div>
-    </section>
-
-    <section class="section-pad dark-section" id="gols">
-      <div class="container goals-layout">
-        <div class="section-title reveal">
-          <span class="eyebrow">Gols</span>
-          <h2>Como Neymar marcou</h2>
-          <p>Pênaltis, faltas, hat-tricks, gols pela Seleção e filtros por competição.</p>
-        </div>
-        <div class="goal-type-grid" id="goalTypeCards"></div>
-        <div class="competition-panel reveal">
-          <h3>Gols pela Seleção Brasileira por competição</h3>
-          <div id="competitionBars" class="bars"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-pad" id="marcou-contra">
-      <div class="container">
-        <div class="section-title reveal">
-          <span class="eyebrow">Adversários</span>
-          <h2>Times e seleções contra quem Neymar marcou</h2>
-          <p>
-            Use a busca para filtrar por clube, seleção, país, competição ou período. A lista de seleções contém contagem de gols.
-          </p>
-        </div>
-
-        <div class="filter-panel reveal">
-          <input type="search" id="opponentSearch" placeholder="Buscar adversário, ex: Japão, Real Madrid, PSG, Flamengo..." aria-label="Buscar adversário" />
-          <select id="opponentType" aria-label="Filtrar tipo de adversário">
-            <option value="all">Todos</option>
-            <option value="Seleção">Seleções</option>
-            <option value="Clube">Clubes</option>
-          </select>
-        </div>
-
-        <div class="opponent-summary" id="opponentSummary"></div>
-        <div class="opponent-grid" id="opponentGrid"></div>
-      </div>
-    </section>
-
-    <section class="section-pad" id="galeria">
-      <div class="container">
-        <div class="section-title reveal">
-          <span class="eyebrow">Galeria</span>
-          <h2>Momentos de auge e títulos</h2>
-          <p>Imagens de referência com créditos no README e links de fonte no rodapé do site.</p>
-        </div>
-        <div class="gallery-grid" id="galleryGrid"></div>
-      </div>
-    </section>
-
-    <section class="section-pad sources" id="fontes">
-      <div class="container">
-        <div class="section-title reveal">
-          <span class="eyebrow">Fontes</span>
-          <h2>Base de dados e observações</h2>
-          <p>
-            Este projeto é estático e editável. Os dados estão em <strong>js/data.js</strong>. Para manter o site atualizado,
-            revise periodicamente as fontes indicadas abaixo.
-          </p>
-        </div>
-        <div class="source-grid" id="sourceGrid"></div>
+        <div class="section-title"><h2>Gols históricos</h2><p>Alguns gols decisivos e simbólicos da carreira.</p></div>
+        <div class="grid four" id="featured-goals"></div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="container footer-grid">
-      <div>
-        <a href="#topo" class="brand footer-brand">
-          <span class="brand-mark">NJ</span>
-          <span>
-            <strong>Neymar Jr.</strong>
-            <small>Site demonstrativo</small>
-          </span>
-        </a>
-        <p>Projeto HTML, CSS e JS pronto para GitHub Pages.</p>
-      </div>
-      <div>
-        <h4>Seções</h4>
-        <a href="#clubes">Clubes</a>
-        <a href="#titulos">Títulos</a>
-        <a href="#gols">Gols</a>
-        <a href="#marcou-contra">Adversários</a>
-      </div>
-      <div>
-        <h4>Editar dados</h4>
-        <p>Abra <code>js/data.js</code> e altere arrays de clubes, títulos, adversários e imagens.</p>
-      </div>
+      <div><strong>Neymar Jr Archive</strong><p>Projeto estático em HTML, CSS e JS para GitHub Pages. Imagens externas em fontes abertas quando disponíveis.</p></div>
+      <div class="supabase-status" id="supabase-status"></div><div class="footer-links" id="footer-sources"></div>
     </div>
   </footer>
-
   <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-service.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

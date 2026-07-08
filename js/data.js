@@ -1,403 +1,374 @@
-// =============================================================
-// DADOS DO SITE NEYMAR JR.
-// Para atualizar o site, edite os arrays abaixo.
-// Observação: números de carreira podem variar por fonte, critério
-// de jogo oficial, amistoso, categoria de base e assistência.
-// =============================================================
+// Base de dados editável do site Neymar Jr Archive
+// Observação: números de gols/jogos podem variar por critério de fonte.
+// Esta base foi organizada para apresentação em site e pode ser atualizada no próprio arquivo.
 
-const NEYMAR_DATA = {
-  updatedAt: 'Julho de 2026',
-  heroStats: [
-    { label: 'Seleção', value: '80 gols' },
-    { label: 'Pênaltis', value: '94' },
-    { label: 'Faltas', value: '24' }
+const NJR_DATA = {
+  updatedAt: "08/07/2026",
+  player: {
+    name: "Neymar da Silva Santos Júnior",
+    shortName: "Neymar Jr.",
+    birth: "05/02/1992",
+    birthplace: "Mogi das Cruzes, Brasil",
+    position: "Atacante / Meia-atacante",
+    height: "1,75 m",
+    dominantFoot: "Destro",
+    heroImage: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20-%20FC%20Barcelona%20-%202015.jpg",
+    subtitle: "Arquivo premium da carreira: clubes, Seleção, gols, títulos, medalhas e prêmios."
+  },
+  totals: [
+    { label: "Gols pela Seleção", value: 80, suffix: "+", note: "Base Transfermarkt, caps/gols da página de conquistas" },
+    { label: "Pênaltis convertidos", value: 94, suffix: "", note: "Transfermarkt: total de pênaltis marcados" },
+    { label: "Faltas diretas", value: 14, suffix: "", note: "StatBunker: direct free kick em competições cobertas" },
+    { label: "Títulos coletivos listados", value: 28, suffix: "+", note: "Clubes + Seleção, variando por critério" }
   ],
-  topNumbers: [
-    { label: 'Jogos pela Seleção Brasileira', value: '130' },
-    { label: 'Gols pela Seleção Brasileira', value: '80' },
-    { label: 'Títulos oficiais citados', value: '30' },
-    { label: 'Prêmios individuais citados', value: '66' }
+  goalTypes: [
+    { type: "Pênalti", value: 94, source: "Transfermarkt", description: "Pênaltis convertidos na carreira profissional, incluindo clubes e Seleção." },
+    { type: "Pênaltis perdidos", value: 22, source: "Transfermarkt", description: "Cobranças não convertidas, conforme registro público por jogo." },
+    { type: "Falta direta", value: 14, source: "StatBunker", description: "Gols de falta direta em competições cobertas pelo StatBunker." },
+    { type: "Pé direito", value: 160, source: "StatBunker", description: "Gols com o pé direito em competições cobertas." },
+    { type: "Pé esquerdo", value: 61, source: "StatBunker", description: "Gols com o pé esquerdo em competições cobertas." },
+    { type: "Cabeça", value: 9, source: "StatBunker", description: "Gols de cabeça em competições cobertas." }
   ],
-  passages: [
+  clubPassages: [
     {
-      id: 'santos',
-      club: 'Santos FC',
-      period: '2009–2013 • 2025–2026',
-      role: 'Ponta esquerda / atacante / meia ofensivo',
-      apps: 256,
-      goals: 149,
-      assists: 67,
-      shirt: '10/11',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_Santos_2011.jpg',
-      summary: 'Clube formador, explosão no futebol brasileiro, Libertadores de 2011 e retorno emocional à Vila Belmiro em 2025.',
-      highlights: ['Libertadores 2011', 'Copa do Brasil 2010', '3x Paulista', 'Retorno em 2025'],
-      importantMatches: [
-        'Estreia profissional contra o Oeste, em março de 2009.',
-        'Gol na final da Copa do Brasil 2010 contra o Vitória.',
-        'Gol na final da Libertadores 2011 contra o Peñarol.',
-        'Gol antológico contra o Flamengo que rendeu o Prêmio Puskás.'
+      id: "santos-1",
+      club: "Santos FC",
+      period: "2009–2013",
+      country: "Brasil",
+      role: "Revelação, protagonista e campeão continental",
+      shirt: "11",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Junior%20the%20Future%20of%20Brazil%202.jpg",
+      summary: "Surgiu como fenômeno no Santos, decidiu mata-matas, liderou geração campeã da Libertadores e consolidou-se como maior promessa brasileira do período.",
+      stats: { games: 225, goals: 136, assists: 64, penalties: 20, freeKicks: 4 },
+      highlights: [
+        "Estreia profissional em 2009.",
+        "Campeão da Copa do Brasil 2010 com artilharia da competição.",
+        "Campeão da Libertadores 2011, encerrando jejum histórico do Santos.",
+        "Gol que venceu o Prêmio Puskás 2011 contra o Flamengo.",
+        "Eleito melhor jogador sul-americano em 2011 e 2012."
+      ],
+      titles: ["Campeonato Paulista 2010, 2011 e 2012", "Copa do Brasil 2010", "Copa Libertadores 2011", "Recopa Sul-Americana 2012"],
+      importantGames: [
+        { date: "27/07/2011", title: "Santos x Flamengo", detail: "Gol antológico que rendeu o FIFA Puskás Award de 2011." },
+        { date: "22/06/2011", title: "Santos x Peñarol", detail: "Final da Libertadores 2011; Neymar marcou na decisão." },
+        { date: "2010", title: "Copa do Brasil", detail: "Artilheiro com 11 gols e campeão nacional." }
       ]
     },
     {
-      id: 'barcelona',
-      club: 'FC Barcelona',
-      period: '2013–2017',
-      role: 'Ponta esquerda no trio MSN',
-      apps: 186,
-      goals: 105,
-      assists: 76,
-      shirt: '11',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_-_FC_Barcelona_-_2015.jpg',
-      summary: 'Fase de auge europeu com Messi e Suárez. Foi decisivo no triplete de 2014/15 e marcou na final da Champions League.',
-      highlights: ['Champions 2014/15', 'Mundial 2015', '2x LaLiga', '3x Copa do Rei'],
-      importantMatches: [
-        'Gol na final da Champions League 2015 contra a Juventus.',
-        'Atuação histórica na remontada do Barcelona contra o PSG em 2017.',
-        'Artilheiro da Champions League 2014/15 empatado com Messi e Cristiano Ronaldo.',
-        'Parte do trio MSN, um dos ataques mais fortes do futebol moderno.'
+      id: "barcelona",
+      club: "FC Barcelona",
+      period: "2013–2017",
+      country: "Espanha",
+      role: "Trio MSN, auge europeu e Champions League",
+      shirt: "11",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20-%20FC%20Barcelona%20-%202015.jpg",
+      summary: "No Barcelona, Neymar viveu seu auge europeu. Formou o trio MSN com Messi e Suárez, venceu a Champions e decidiu jogos gigantes.",
+      stats: { games: 186, goals: 105, assists: 76, penalties: 10, freeKicks: 5 },
+      highlights: [
+        "Chegada oficial em 2013 e adaptação ao futebol europeu.",
+        "Temporada 2014/15 histórica com Champions, La Liga e Copa do Rei.",
+        "Artilheiro da Champions 2014/15 ao lado de Messi e Cristiano Ronaldo, com 10 gols.",
+        "Gol na final da Champions contra a Juventus em Berlim.",
+        "Protagonista da remontada contra o PSG em 2017."
+      ],
+      titles: ["La Liga 2014/15 e 2015/16", "Copa do Rei 2014/15, 2015/16 e 2016/17", "Champions League 2014/15", "Mundial de Clubes 2015", "Supercopa da Espanha 2013"],
+      importantGames: [
+        { date: "06/06/2015", title: "Barcelona 3 x 1 Juventus", detail: "Gol no fim da final da Champions League 2014/15." },
+        { date: "08/03/2017", title: "Barcelona 6 x 1 PSG", detail: "Dois gols e uma assistência na remontada histórica." },
+        { date: "21/04/2015", title: "Barcelona x PSG", detail: "Dois gols nas quartas da Champions." }
       ]
     },
     {
-      id: 'psg',
-      club: 'Paris Saint-Germain',
-      period: '2017–2023',
-      role: 'Camisa 10, ponta e meia criativo',
-      apps: 173,
-      goals: 118,
-      assists: 77,
-      shirt: '10',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_PSG.jpg',
-      summary: 'Contratação recorde mundial, domínio nacional na França e campanha até a final da Champions League 2019/20.',
-      highlights: ['5x Ligue 1', 'Final da Champions 2020', '3x Copa da França', '2x Copa da Liga'],
-      importantMatches: [
-        'Estreia com gol e assistência contra o Guingamp em 2017.',
-        'Protagonismo na campanha do PSG até a final da Champions 2019/20.',
-        'Grandes atuações contra Bayern, Atalanta, Manchester United e RB Leipzig.',
-        'Período de muitos títulos nacionais, mas também de lesões importantes.'
+      id: "psg",
+      club: "Paris Saint-Germain",
+      period: "2017–2023",
+      country: "França",
+      role: "Transferência recorde, camisa 10 e final europeia",
+      shirt: "10",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20PSG.jpg",
+      summary: "Contratação mais cara da história, Neymar levou criatividade e decisão ao PSG, conquistou títulos nacionais e chegou à final da Champions em 2020.",
+      stats: { games: 173, goals: 118, assists: 77, penalties: 24, freeKicks: 7 },
+      highlights: [
+        "Transferência recorde mundial em 2017.",
+        "Eleito melhor jogador da Ligue 1 em 2017/18.",
+        "Conduziu o PSG à primeira final de Champions League do clube em 2020.",
+        "Passou dos 100 gols pelo PSG.",
+        "Quarto maior artilheiro da história do clube no período."
+      ],
+      titles: ["Ligue 1 2017/18, 2018/19, 2019/20, 2021/22 e 2022/23", "Copa da França 2017/18, 2019/20 e 2020/21", "Copa da Liga Francesa 2017/18 e 2019/20", "Supercopa da França 2018, 2020 e 2022"],
+      importantGames: [
+        { date: "2020", title: "PSG na final da Champions", detail: "Participação central na campanha europeia histórica do clube." },
+        { date: "02/12/2020", title: "Manchester United x PSG", detail: "Atuação decisiva com gols em Old Trafford." },
+        { date: "2018", title: "Primeira temporada", detail: "Temporada de impacto com título francês e prêmio de jogador do ano." }
       ]
     },
     {
-      id: 'alhilal',
-      club: 'Al-Hilal',
-      period: '2023–2025',
-      role: 'Meia-atacante / camisa 10',
-      apps: 7,
-      goals: 1,
-      assists: 3,
-      shirt: '10',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_2018.jpg',
-      summary: 'Passagem curta na Arábia Saudita, limitada por grave lesão no joelho e poucos jogos oficiais.',
-      highlights: ['Transferência histórica', 'Camisa 10', 'Lesão no joelho', 'Retorno ao Brasil'],
-      importantMatches: [
-        'Estreia na Saudi Pro League em 2023.',
-        'Primeiro gol pelo clube na Liga dos Campeões da Ásia.',
-        'Lesão pelo Brasil em 2023 interrompeu a sequência no clube.',
-        'Rescisão e retorno ao Santos em 2025.'
+      id: "alhilal",
+      club: "Al-Hilal SFC",
+      period: "2023–2025",
+      country: "Arábia Saudita",
+      role: "Projeto saudita e título nacional",
+      shirt: "10",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Al-Hilal%20SFC%202023.jpg",
+      summary: "Passagem marcada por alta expectativa, lesão grave e participação reduzida. Ainda assim, integrou elenco campeão saudita.",
+      stats: { games: 7, goals: 1, assists: 3, penalties: 0, freeKicks: 0 },
+      highlights: [
+        "Chegada ao futebol saudita em 2023.",
+        "Primeiro gol pelo clube em competição asiática.",
+        "Campeão saudita 2023/24 com o Al-Hilal.",
+        "Lesão no joelho reduziu drasticamente sua sequência."
+      ],
+      titles: ["Saudi Pro League 2023/24"],
+      importantGames: [
+        { date: "03/10/2023", title: "Al-Hilal x Nassaji", detail: "Primeiro gol pelo Al-Hilal." }
       ]
     },
     {
-      id: 'brasil',
-      club: 'Seleção Brasileira',
-      period: '2010–2026',
-      role: 'Camisa 10, atacante e líder técnico',
-      apps: 130,
-      goals: 80,
-      assists: 58,
-      shirt: '10',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_Rio_2016.jpg',
-      summary: 'Maior artilheiro histórico da Seleção Brasileira, ouro olímpico em 2016 e campeão da Copa das Confederações 2013.',
-      highlights: ['80 gols pelo Brasil', 'Ouro Olímpico 2016', 'Confederações 2013', '4 Copas do Mundo'],
-      importantMatches: [
-        'Gol na estreia pela Seleção contra os Estados Unidos em 2010.',
-        'Gol na final da Copa das Confederações 2013 contra a Espanha.',
-        'Gol de falta e pênalti decisivo na final olímpica contra a Alemanha em 2016.',
-        'Ultrapassou Pelé como maior artilheiro da Seleção em 2023.'
+      id: "santos-2",
+      club: "Santos FC",
+      period: "2025–atual",
+      country: "Brasil",
+      role: "Retorno ao clube formador",
+      shirt: "10",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Barcelona%20presentation%202.jpg",
+      summary: "Retorno ao Santos com status de ídolo máximo contemporâneo, assumindo camisa 10 e função de liderança técnica.",
+      stats: { games: 36, goals: 15, assists: 8, penalties: 6, freeKicks: 1 },
+      highlights: [
+        "Retorno anunciado após ciclo no exterior.",
+        "Camisa 10 e referência técnica do elenco.",
+        "Nova fase com foco em liderança, protagonismo e recuperação de ritmo."
+      ],
+      titles: [],
+      importantGames: [
+        { date: "2025", title: "Volta à Vila Belmiro", detail: "Retorno simbólico ao clube que o revelou." }
       ]
     }
   ],
-  timeline: [
-    { year: '2009', title: 'Estreia profissional no Santos', text: 'Neymar sobe ao profissional com 17 anos, ganha espaço rapidamente e começa a construir a imagem de fenômeno técnico no Brasil.' },
-    { year: '2010', title: 'Copa do Brasil e primeira grande temporada', text: 'Vira protagonista no Santos, soma gols em mata-mata e conquista a Copa do Brasil.' },
-    { year: '2011', title: 'Libertadores e Prêmio Puskás', text: 'Marca na final da Libertadores contra o Peñarol e ganha o Puskás pelo gol contra o Flamengo.' },
-    { year: '2013', title: 'Copa das Confederações e Barcelona', text: 'Brilha com a Seleção, marca na final contra a Espanha e se transfere para o Barcelona.' },
-    { year: '2015', title: 'Triplete com o Barcelona', text: 'Ao lado de Messi e Suárez, conquista Champions, LaLiga e Copa do Rei, marcando na decisão europeia.' },
-    { year: '2016', title: 'Ouro olímpico no Maracanã', text: 'Faz gol de falta e converte o pênalti decisivo contra a Alemanha, dando ao Brasil o primeiro ouro olímpico no futebol masculino.' },
-    { year: '2017', title: 'Transferência recorde para o PSG', text: 'Vai para Paris em uma negociação histórica e assume papel de camisa 10 do projeto francês.' },
-    { year: '2020', title: 'Final de Champions pelo PSG', text: 'Conduz o clube à sua primeira final de Champions League, contra o Bayern de Munique.' },
-    { year: '2023', title: 'Recorde pela Seleção Brasileira', text: 'Chega ao topo da artilharia histórica da Seleção Brasileira ao ultrapassar a marca de Pelé.' },
-    { year: '2025', title: 'Volta ao Santos', text: 'Após passagem curta pelo Al-Hilal e recuperação física, retorna ao clube onde começou.' },
-    { year: '2026', title: 'Fechamento de ciclo com a Seleção', text: 'Encerramento simbólico de ciclo internacional após 130 jogos e 80 gols pelo Brasil, segundo bases consultadas.' }
+  nationalTeams: [
+    { team: "Brasil Sub-17", period: "2009", games: 3, goals: 1, titles: [], note: "Primeira vitrine internacional de base." },
+    { team: "Brasil Sub-20", period: "2011", games: 7, goals: 9, titles: ["Sul-Americano Sub-20 2011"], note: "Campeão e destaque ofensivo." },
+    { team: "Brasil Olímpico / Sub-23", period: "2012–2016", games: 14, goals: 8, titles: ["Prata Olímpica 2012", "Ouro Olímpico 2016"], note: "Capitão e cobrador decisivo no ouro do Rio 2016." },
+    { team: "Seleção Brasileira Principal", period: "2010–2026", games: 130, goals: 80, titles: ["Copa das Confederações 2013"], note: "Maior artilheiro da história da Seleção Brasileira segundo base Transfermarkt." }
   ],
-  titleGroups: {
-    coletivos: [
-      { meta: 'Santos', title: 'Campeonato Paulista', text: '2010, 2011 e 2012.' },
-      { meta: 'Santos', title: 'Copa do Brasil', text: '2010, com participação decisiva no ataque santista.' },
-      { meta: 'Santos', title: 'Copa Libertadores', text: '2011, título mais importante da primeira passagem pelo clube.' },
-      { meta: 'Santos', title: 'Recopa Sul-Americana', text: '2012, consolidando o ciclo continental.' },
-      { meta: 'Barcelona', title: 'UEFA Champions League', text: '2014/15, com gol de Neymar na final contra a Juventus.' },
-      { meta: 'Barcelona', title: 'LaLiga', text: '2014/15 e 2015/16.' },
-      { meta: 'Barcelona', title: 'Copa do Rei', text: '2014/15, 2015/16 e 2016/17.' },
-      { meta: 'Barcelona', title: 'Mundial de Clubes da FIFA', text: '2015, no ciclo do Barcelona campeão europeu.' },
-      { meta: 'PSG', title: 'Ligue 1', text: 'Cinco conquistas nacionais no futebol francês.' },
-      { meta: 'PSG', title: 'Copas nacionais francesas', text: 'Copa da França, Copa da Liga e Supercopa da França em diferentes temporadas.' },
-      { meta: 'Brasil', title: 'Copa das Confederações', text: '2013, com Neymar eleito destaque do torneio.' },
-      { meta: 'Brasil Olímpico', title: 'Ouro Olímpico', text: 'Rio 2016, primeiro ouro do Brasil no futebol masculino.' }
-    ],
-    individuais: [
-      { meta: 'FIFA', title: 'Prêmio Puskás', text: '2011, pelo gol contra o Flamengo no Brasileirão.' },
-      { meta: 'América do Sul', title: 'Melhor jogador sul-americano', text: 'Reconhecido durante o auge no Santos.' },
-      { meta: 'FIFA Confederações', title: 'Bola de Ouro do torneio', text: '2013, eleito melhor jogador da Copa das Confederações.' },
-      { meta: 'UEFA', title: 'Artilheiro da Champions', text: '2014/15, terminou no topo da artilharia junto de Messi e Cristiano Ronaldo.' },
-      { meta: 'França', title: 'Melhor jogador da Ligue 1', text: '2017/18, destaque individual logo na primeira temporada pelo PSG.' },
-      { meta: 'Seleção Brasileira', title: 'Maior artilheiro histórico', text: '80 gols em 130 jogos pela Seleção Brasileira, conforme bases consultadas.' },
-      { meta: 'Carreira', title: '21 hat-tricks citados', text: 'Marca registrada de jogos com múltiplos gols e protagonismo ofensivo.' },
-      { meta: 'Carreira', title: '66 prêmios individuais citados', text: 'Número consolidado em listas públicas de títulos e prêmios.' }
-    ],
-    jogos: [
-      { meta: 'Santos 5 x 4 Flamengo', title: 'Gol do Puskás', text: 'Jogo de 2011 com arrancada, dribles e finalização que virou prêmio mundial.' },
-      { meta: 'Santos 2 x 1 Peñarol', title: 'Final da Libertadores 2011', text: 'Neymar marca na decisão e recoloca o Santos no topo da América.' },
-      { meta: 'Brasil 3 x 0 Espanha', title: 'Final da Copa das Confederações 2013', text: 'Gol em final no Maracanã e consagração com a camisa 10 da Seleção.' },
-      { meta: 'Barcelona 3 x 1 Juventus', title: 'Final da Champions 2015', text: 'Gol nos acréscimos para fechar o título europeu do Barcelona.' },
-      { meta: 'Barcelona 6 x 1 PSG', title: 'Remontada de 2017', text: 'Atuação decisiva com gols e assistência no Camp Nou.' },
-      { meta: 'Brasil 1 x 1 Alemanha', title: 'Final Olímpica 2016', text: 'Gol de falta no tempo normal e pênalti decisivo na disputa.' },
-      { meta: 'Brasil 5 x 1 Bolívia', title: 'Recorde histórico', text: 'Gols que consolidaram Neymar acima de Pelé na artilharia da Seleção.' },
-      { meta: 'PSG na Champions 2020', title: 'Final inédita', text: 'Protagonismo técnico na campanha mais longa do PSG na competição.' }
-    ]
-  },
-  goalTypes: [
-    { icon: '🎯', label: 'Pênaltis convertidos', value: '94', text: 'Transfermarkt lista 94 pênaltis marcados na carreira.' },
-    { icon: '🧤', label: 'Pênaltis perdidos', value: '22', text: 'Transfermarkt também registra 22 pênaltis desperdiçados.' },
-    { icon: '⚡', label: 'Gols de falta', value: '24', text: 'Número citado em listas de títulos e prêmios recebidos por Neymar.' },
-    { icon: '🔥', label: 'Hat-tricks', value: '21', text: 'Marca citada em estatísticas consolidadas de carreira.' },
-    { icon: '🇧🇷', label: 'Gols em Copas', value: '9', text: '4 em 2014, 2 em 2018, 2 em 2022 e 1 em 2026.' },
-    { icon: '🏆', label: 'Gols em competições FIFA', value: '29', text: 'Inclui Copa do Mundo, Eliminatórias e Copa das Confederações.' },
-    { icon: '🤝', label: 'Gols em amistosos', value: '46', text: 'Maior parte dos gols pela Seleção veio em amistosos internacionais.' },
-    { icon: '🥇', label: 'Gol olímpico decisivo', value: '2016', text: 'Falta no tempo normal e pênalti final contra a Alemanha.' }
+  collectiveTitles: [
+    { category: "Santos", title: "Campeonato Paulista", years: "2010, 2011, 2012", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Pacaembu%20Santos%202010.jpg" },
+    { category: "Santos", title: "Copa do Brasil", years: "2010", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Copa%20do%20Brasil%20trophy.jpg" },
+    { category: "Santos", title: "Copa Libertadores", years: "2011", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Trof%C3%A9u%20da%20Copa%20Libertadores%20da%20Am%C3%A9rica%20de%202023.jpg" },
+    { category: "Santos", title: "Recopa Sul-Americana", years: "2012", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Copa%20Libertadores%20trophy.jpg" },
+    { category: "Barcelona", title: "La Liga", years: "2014/15, 2015/16", image: "https://commons.wikimedia.org/wiki/Special:FilePath/La%20Liga%20trophy%202019.jpg" },
+    { category: "Barcelona", title: "Copa do Rei", years: "2014/15, 2015/16, 2016/17", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Copa%20del%20Rey%20Trophy.jpg" },
+    { category: "Barcelona", title: "UEFA Champions League", years: "2014/15", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Champions%20League%20Trophy%20%2852736201132%29.jpg" },
+    { category: "Barcelona", title: "Mundial de Clubes FIFA", years: "2015", image: "https://commons.wikimedia.org/wiki/Special:FilePath/FIFA%20Club%20World%20Cup%20trophy.jpg" },
+    { category: "PSG", title: "Ligue 1", years: "2017/18, 2018/19, 2019/20, 2021/22, 2022/23", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Troph%C3%A9e%20de%20Ligue%201%20Uber%20Eats.jpg" },
+    { category: "PSG", title: "Copas nacionais francesas", years: "Coupe de France, Coupe de la Ligue e Supercopas", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Coupe%20de%20France%20Trophy.jpg" },
+    { category: "Al-Hilal", title: "Saudi Pro League", years: "2023/24", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Al-Hilal%20SFC%20Logo.svg" },
+    { category: "Seleção", title: "Copa das Confederações FIFA", years: "2013", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Confed.Cup2013Champions.jpg" },
+    { category: "Seleção", title: "Ouro Olímpico", years: "Rio 2016", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Rio%202016.jpg" }
   ],
-  brazilGoalsByCompetition: [
-    { label: 'Amistosos', goals: 46 },
-    { label: 'Eliminatórias', goals: 16 },
-    { label: 'Copa do Mundo', goals: 9 },
-    { label: 'Copa América', goals: 5 },
-    { label: 'Confederações', goals: 4 }
+  individualAwards: [
+    {
+      classification: "Prêmio individual",
+      title: "FIFA Puskás Award",
+      years: "2011",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/FIFA%20Puskas%20Award%202009%20CR7%20Museum.jpg",
+      detail: "Venceu pelo gol contra o Flamengo, marcado pelo Santos em 2011."
+    },
+    {
+      classification: "Prêmio individual",
+      title: "Futebolista Sul-Americano do Ano",
+      years: "2011 e 2012",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Junior%20the%20Future%20of%20Brazil%202.jpg",
+      detail: "Reconhecimento continental no período de maior domínio pelo Santos."
+    },
+    {
+      classification: "Prêmio de torneio",
+      title: "Bola de Ouro da Copa das Confederações",
+      years: "2013",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Brasil%20copa%20confedera%C3%A7%C3%B5es2013.jpg",
+      detail: "Melhor jogador da competição vencida pelo Brasil."
+    },
+    {
+      classification: "Prêmio individual",
+      title: "Jogador do Ano da Ligue 1",
+      years: "2017/18",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20PSG.jpg",
+      detail: "Prêmio de melhor jogador do campeonato francês em sua primeira temporada no PSG."
+    },
+    {
+      classification: "Artilharia",
+      title: "Artilheiro da UEFA Champions League",
+      years: "2014/15 — 10 gols",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Champions%20League%20Trophy%20%2852736201132%29.jpg",
+      detail: "Dividiu a artilharia com Messi e Cristiano Ronaldo."
+    },
+    {
+      classification: "Artilharia",
+      title: "Artilheiro da Copa do Brasil",
+      years: "2010 — 11 gols",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Junior%20the%20Future%20of%20Brazil%202.jpg",
+      detail: "Marcou em campanha campeã do Santos."
+    },
+    {
+      classification: "Artilharia",
+      title: "Artilheiro do Campeonato Paulista",
+      years: "2012 — 20 gols",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Junior%20the%20Future%20of%20Brazil%202.jpg",
+      detail: "Temporada de enorme domínio estadual pelo Santos."
+    },
+    {
+      classification: "Artilharia",
+      title: "Artilheiro da Libertadores",
+      years: "2012 — 8 gols",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Trof%C3%A9u%20da%20Copa%20Libertadores%20da%20Am%C3%A9rica%20de%202023.jpg",
+      detail: "Destaque ofensivo continental pelo Santos."
+    },
+    {
+      classification: "Medalha",
+      title: "Medalha de Ouro Olímpica",
+      years: "Rio 2016",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Rio%202016.jpg",
+      detail: "Capitão do Brasil; marcou falta no tempo normal e converteu o pênalti decisivo na final contra a Alemanha."
+    },
+    {
+      classification: "Medalha",
+      title: "Medalha de Prata Olímpica",
+      years: "Londres 2012",
+      image: "https://commons.wikimedia.org/wiki/Special:FilePath/2012%20Summer%20Olympics%20football%20men%20Brazil%20team.jpg",
+      detail: "Vice-campeão olímpico com a Seleção Brasileira Sub-23."
+    }
+  ],
+  importantGoals: [
+    { classification: "Santos", date: "27/07/2011", opponent: "Flamengo", competition: "Brasileirão", type: "Gol histórico / Puskás", detail: "Arrancada com dribles em sequência e finalização; vencedor do Puskás." },
+    { classification: "Santos", date: "22/06/2011", opponent: "Peñarol", competition: "Libertadores", type: "Jogo corrido", detail: "Gol na final da Libertadores 2011." },
+    { classification: "Barcelona", date: "06/06/2015", opponent: "Juventus", competition: "Champions League", type: "Jogo corrido", detail: "Gol no fim da final que confirmou o título europeu." },
+    { classification: "Barcelona", date: "08/03/2017", opponent: "PSG", competition: "Champions League", type: "Falta + pênalti", detail: "Dois gols e assistência na remontada de 6 x 1." },
+    { classification: "Seleção", date: "30/06/2013", opponent: "Espanha", competition: "Copa das Confederações", type: "Jogo corrido", detail: "Gol na final vencida pelo Brasil no Maracanã." },
+    { classification: "Seleção", date: "20/08/2016", opponent: "Alemanha Olímpica", competition: "Jogos Olímpicos", type: "Falta + pênalti decisivo", detail: "Gol de falta e pênalti final no ouro olímpico." },
+    { classification: "PSG", date: "02/12/2020", opponent: "Manchester United", competition: "Champions League", type: "Jogo corrido", detail: "Dois gols em vitória decisiva fora de casa." },
+    { classification: "Al-Hilal", date: "03/10/2023", opponent: "Nassaji Mazandaran", competition: "AFC Champions League", type: "Jogo corrido", detail: "Primeiro gol pelo Al-Hilal." }
   ],
   opponents: [
-    // Seleções com contagem de gols, base List of international goals scored by Neymar.
-    { name: 'Japão', type: 'Seleção', goals: 9, context: 'Brasil', note: 'Adversário contra quem mais marcou pela Seleção.' },
-    { name: 'Peru', type: 'Seleção', goals: 6, context: 'Brasil', note: 'Inclui hat-trick nas Eliminatórias de 2020.' },
-    { name: 'Bolívia', type: 'Seleção', goals: 5, context: 'Brasil', note: 'Inclui gols do recorde histórico em 2023.' },
-    { name: 'Estados Unidos', type: 'Seleção', goals: 5, context: 'Brasil', note: 'Primeiro gol pela Seleção foi contra os EUA.' },
-    { name: 'Colômbia', type: 'Seleção', goals: 4, context: 'Brasil', note: 'Gols em amistosos e Eliminatórias.' },
-    { name: 'Croácia', type: 'Seleção', goals: 4, context: 'Brasil', note: 'Marcou em Copas de 2014, 2018 e 2022.' },
-    { name: 'Equador', type: 'Seleção', goals: 4, context: 'Brasil', note: 'Gols em Copa América e Eliminatórias.' },
-    { name: 'Coreia do Sul', type: 'Seleção', goals: 4, context: 'Brasil', note: 'Inclui gol nas oitavas da Copa de 2022.' },
-    { name: 'Argentina', type: 'Seleção', goals: 3, context: 'Brasil', note: 'Gols em Superclássico e Eliminatórias.' },
-    { name: 'China', type: 'Seleção', goals: 3, context: 'Brasil', note: 'Hat-trick em amistoso de 2012.' },
-    { name: 'África do Sul', type: 'Seleção', goals: 3, context: 'Brasil', note: 'Hat-trick em 2014.' },
-    { name: 'Uruguai', type: 'Seleção', goals: 3, context: 'Brasil', note: 'Gols em Eliminatórias e amistosos.' },
-    { name: 'Camarões', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Dois gols na Copa de 2014.' },
-    { name: 'Chile', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Inclui gol de pênalti nas Eliminatórias.' },
-    { name: 'Costa Rica', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Marcou em amistoso e Copa de 2018.' },
-    { name: 'México', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Gol na Confederações e na Copa de 2018.' },
-    { name: 'Paraguai', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Gols em Eliminatórias.' },
-    { name: 'Escócia', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Dois gols em amistoso de 2011.' },
-    { name: 'Turquia', type: 'Seleção', goals: 2, context: 'Brasil', note: 'Dois gols em amistoso de 2014.' },
-    { name: 'Austrália', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso internacional.' },
-    { name: 'Áustria', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso pré-Copa de 2018.' },
-    { name: 'El Salvador', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Gol de pênalti em amistoso.' },
-    { name: 'França', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso no Stade de France.' },
-    { name: 'Alemanha', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso internacional.' },
-    { name: 'Iraque', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso de 2012.' },
-    { name: 'Itália', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Copa das Confederações 2013.' },
-    { name: 'Noruega', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Gol de pênalti na Copa de 2026.' },
-    { name: 'Panamá', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso de preparação.' },
-    { name: 'Portugal', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso internacional.' },
-    { name: 'Espanha', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Final da Copa das Confederações 2013.' },
-    { name: 'Tunísia', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Amistoso de 2022.' },
-    { name: 'Venezuela', type: 'Seleção', goals: 1, context: 'Brasil', note: 'Copa América 2021.' },
-
-    // Clubes contra quem marcou em bases públicas de gols por partida.
-    { name: 'Mogi Mirim', type: 'Clube', goals: null, context: 'Santos', note: 'Primeiros gols no profissional.' },
-    { name: 'Rio Branco-AC', type: 'Clube', goals: null, context: 'Santos', note: 'Copa do Brasil.' },
-    { name: 'Santo André', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista e mata-mata.' },
-    { name: 'Palmeiras', type: 'Clube', goals: null, context: 'Santos', note: 'Clássicos e Brasileirão.' },
-    { name: 'Atlético-MG', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão e Copa do Brasil.' },
-    { name: 'Barueri', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista e Brasileirão.' },
-    { name: 'Athletico-PR', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Náutico', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Internacional', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão e Libertadores.' },
-    { name: 'Coritiba', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Cruzeiro', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Oeste', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'São Paulo', type: 'Clube', goals: null, context: 'Santos', note: 'Clássicos paulistas.' },
-    { name: 'Corinthians', type: 'Clube', goals: null, context: 'Santos', note: 'Clássicos e finais estaduais.' },
-    { name: 'Naviraiense-MS', type: 'Clube', goals: null, context: 'Santos', note: 'Copa do Brasil.' },
-    { name: 'Remo', type: 'Clube', goals: null, context: 'Santos', note: 'Copa do Brasil.' },
-    { name: 'São Caetano', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'Guarani', type: 'Clube', goals: null, context: 'Santos', note: 'Copa do Brasil e Paulista.' },
-    { name: 'Botafogo', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Ceará', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Vitória', type: 'Clube', goals: null, context: 'Santos', note: 'Final da Copa do Brasil 2010.' },
-    { name: 'Grêmio', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Avaí', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Goiás', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Portuguesa', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'Colo-Colo', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Deportivo Táchira', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Ponte Preta', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'Once Caldas', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Cerro Porteño', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Peñarol', type: 'Clube', goals: null, context: 'Santos', note: 'Final da Libertadores 2011.' },
-    { name: 'Flamengo', type: 'Clube', goals: null, context: 'Santos', note: 'Inclui gol vencedor do Puskás.' },
-    { name: 'Bahia', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Fluminense', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Vasco da Gama', type: 'Clube', goals: null, context: 'Santos', note: 'Gol de falta direta em 2011.' },
-    { name: 'Kashiwa Reysol', type: 'Clube', goals: null, context: 'Santos', note: 'Mundial de Clubes.' },
-    { name: 'Botafogo-SP', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'Juan Aurich', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Guaratinguetá', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'Catanduvense', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'The Strongest', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Universidad de Chile', type: 'Clube', goals: null, context: 'Santos', note: 'Recopa Sul-Americana.' },
-    { name: 'Bolívar', type: 'Clube', goals: null, context: 'Santos', note: 'Libertadores.' },
-    { name: 'Figueirense', type: 'Clube', goals: null, context: 'Santos', note: 'Brasileirão.' },
-    { name: 'Bragantino', type: 'Clube', goals: null, context: 'Santos', note: 'Paulista.' },
-    { name: 'Internacional de Limeira', type: 'Clube', goals: null, context: 'Santos', note: 'Retorno ao Santos em 2025.' },
-
-    { name: 'Atlético de Madrid', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga, Copa e Supercopa.' },
-    { name: 'Real Madrid', type: 'Clube', goals: null, context: 'Barcelona', note: 'Clássico espanhol.' },
-    { name: 'Valencia', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga e Copa do Rei.' },
-    { name: 'Sevilla', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga e finais nacionais.' },
-    { name: 'Athletic Club', type: 'Clube', goals: null, context: 'Barcelona', note: 'Copa do Rei e LaLiga.' },
-    { name: 'Villarreal', type: 'Clube', goals: null, context: 'Barcelona', note: 'Gol e grandes atuações em LaLiga.' },
-    { name: 'Real Sociedad', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Granada', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Getafe', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Rayo Vallecano', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Levante', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Celta de Vigo', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Deportivo La Coruña', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Sporting Gijón', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Málaga', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Eibar', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Espanyol', type: 'Clube', goals: null, context: 'Barcelona', note: 'Derby catalão.' },
-    { name: 'Las Palmas', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Osasuna', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Real Betis', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Almería', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Elche', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'Córdoba', type: 'Clube', goals: null, context: 'Barcelona', note: 'LaLiga.' },
-    { name: 'APOEL', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'Paris Saint-Germain', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League e remontada.' },
-    { name: 'Bayern de Munique', type: 'Clube', goals: null, context: 'Barcelona / PSG', note: 'Champions League.' },
-    { name: 'Manchester City', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'Juventus', type: 'Clube', goals: null, context: 'Barcelona', note: 'Gol na final da Champions 2015.' },
-    { name: 'Ajax', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'Celtic', type: 'Clube', goals: null, context: 'Barcelona / PSG', note: 'Champions League.' },
-    { name: 'Roma', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'BATE Borisov', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'Bayer Leverkusen', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'Arsenal', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-    { name: 'Borussia Mönchengladbach', type: 'Clube', goals: null, context: 'Barcelona', note: 'Champions League.' },
-
-    { name: 'Guingamp', type: 'Clube', goals: null, context: 'PSG', note: 'Estreia com gol e assistência.' },
-    { name: 'Toulouse', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Metz', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Dijon', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Bordeaux', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Monaco', type: 'Clube', goals: null, context: 'PSG', note: 'Clássico nacional francês.' },
-    { name: 'Marseille', type: 'Clube', goals: null, context: 'PSG', note: 'Le Classique.' },
-    { name: 'Lyon', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Lille', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Nantes', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Montpellier', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Angers', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Strasbourg', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Amiens', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Rennes', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1 e copas nacionais.' },
-    { name: 'Nice', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Saint-Étienne', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Caen', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Troyes', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Reims', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Nîmes', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Lens', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Lorient', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Brest', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Auxerre', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Clermont', type: 'Clube', goals: null, context: 'PSG', note: 'Ligue 1.' },
-    { name: 'Maccabi Haifa', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'RB Leipzig', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'Atalanta', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League 2019/20.' },
-    { name: 'Manchester United', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'Liverpool', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'Estrela Vermelha', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'Istanbul Basaksehir', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'Borussia Dortmund', type: 'Clube', goals: null, context: 'PSG', note: 'Champions League.' },
-    { name: 'Nassaji Mazandaran', type: 'Clube', goals: null, context: 'Al-Hilal', note: 'Primeiro gol pelo Al-Hilal na AFC Champions League.' }
+    // Seleções principais e olímpicas
+    { name: "Estados Unidos", category: "Seleção", context: "Brasil principal", goals: 4 },
+    { name: "Argentina", category: "Seleção", context: "Brasil principal", goals: 3 },
+    { name: "México", category: "Seleção", context: "Brasil principal", goals: 4 },
+    { name: "Japão", category: "Seleção", context: "Brasil principal", goals: 9 },
+    { name: "Colômbia", category: "Seleção", context: "Brasil principal", goals: 4 },
+    { name: "Bolívia", category: "Seleção", context: "Brasil principal", goals: 5 },
+    { name: "Chile", category: "Seleção", context: "Brasil principal", goals: 2 },
+    { name: "Espanha", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Itália", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Croácia", category: "Seleção", context: "Brasil principal", goals: 3 },
+    { name: "Cameroon", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Peru", category: "Seleção", context: "Brasil principal", goals: 5 },
+    { name: "Equador", category: "Seleção", context: "Brasil principal", goals: 2 },
+    { name: "Uruguai", category: "Seleção", context: "Brasil principal", goals: 2 },
+    { name: "Paraguai", category: "Seleção", context: "Brasil principal", goals: 2 },
+    { name: "Costa Rica", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Áustria", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Coreia do Sul", category: "Seleção", context: "Brasil principal", goals: 5 },
+    { name: "Tunísia", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Venezuela", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Gana", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Sérvia", category: "Seleção", context: "Brasil principal", goals: 1 },
+    { name: "Honduras Olímpica", category: "Seleção", context: "Brasil Olímpico", goals: 1 },
+    { name: "Alemanha Olímpica", category: "Seleção", context: "Brasil Olímpico", goals: 1 },
+    { name: "Haiti", category: "Seleção", context: "Copa América Centenário", goals: 1 },
+    // Clubes brasileiros / América do Sul
+    { name: "Flamengo", category: "Clube brasileiro", context: "Santos", goals: 3 },
+    { name: "Palmeiras", category: "Clube brasileiro", context: "Santos", goals: 6 },
+    { name: "São Paulo", category: "Clube brasileiro", context: "Santos", goals: 5 },
+    { name: "Corinthians", category: "Clube brasileiro", context: "Santos", goals: 4 },
+    { name: "Atlético-MG", category: "Clube brasileiro", context: "Santos", goals: 3 },
+    { name: "Cruzeiro", category: "Clube brasileiro", context: "Santos", goals: 3 },
+    { name: "Grêmio", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Internacional", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Fluminense", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Vasco", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Botafogo", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Athletico-PR", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Ceará", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Avaí", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Vitória", category: "Clube brasileiro", context: "Santos", goals: 2 },
+    { name: "Mogi Mirim", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Rio Branco-AC", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Santo André", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Guarani", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Ponte Preta", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Oeste", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Ituano", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Linense", category: "Clube brasileiro", context: "Santos", goals: 1 },
+    { name: "Peñarol", category: "Clube sul-americano", context: "Santos / Libertadores", goals: 1 },
+    { name: "Cerro Porteño", category: "Clube sul-americano", context: "Santos / Libertadores", goals: 2 },
+    { name: "Bolívar", category: "Clube sul-americano", context: "Santos / Libertadores", goals: 1 },
+    { name: "The Strongest", category: "Clube sul-americano", context: "Santos / Libertadores", goals: 1 },
+    { name: "Vélez Sarsfield", category: "Clube sul-americano", context: "Santos / Libertadores", goals: 1 },
+    // Barcelona / Europa
+    { name: "Real Madrid", category: "Clube europeu", context: "Barcelona", goals: 3 },
+    { name: "Atlético de Madrid", category: "Clube europeu", context: "Barcelona", goals: 7 },
+    { name: "Villarreal", category: "Clube europeu", context: "Barcelona", goals: 5 },
+    { name: "Juventus", category: "Clube europeu", context: "Barcelona", goals: 1 },
+    { name: "PSG", category: "Clube europeu", context: "Barcelona", goals: 6 },
+    { name: "Bayern de Munique", category: "Clube europeu", context: "Barcelona", goals: 2 },
+    { name: "Manchester City", category: "Clube europeu", context: "Barcelona", goals: 4 },
+    { name: "Celtic", category: "Clube europeu", context: "Barcelona / PSG", goals: 4 },
+    { name: "Ajax", category: "Clube europeu", context: "Barcelona", goals: 3 },
+    { name: "Arsenal", category: "Clube europeu", context: "Barcelona", goals: 1 },
+    { name: "Sevilla", category: "Clube europeu", context: "Barcelona", goals: 4 },
+    { name: "Athletic Club", category: "Clube europeu", context: "Barcelona", goals: 5 },
+    { name: "Espanyol", category: "Clube europeu", context: "Barcelona", goals: 3 },
+    { name: "Granada", category: "Clube europeu", context: "Barcelona", goals: 3 },
+    { name: "Rayo Vallecano", category: "Clube europeu", context: "Barcelona", goals: 4 },
+    { name: "Celta de Vigo", category: "Clube europeu", context: "Barcelona", goals: 2 },
+    { name: "Deportivo La Coruña", category: "Clube europeu", context: "Barcelona", goals: 2 },
+    { name: "Elche", category: "Clube europeu", context: "Barcelona", goals: 3 },
+    { name: "Eibar", category: "Clube europeu", context: "Barcelona", goals: 2 },
+    { name: "Getafe", category: "Clube europeu", context: "Barcelona", goals: 2 },
+    { name: "Las Palmas", category: "Clube europeu", context: "Barcelona", goals: 2 },
+    { name: "Málaga", category: "Clube europeu", context: "Barcelona", goals: 1 },
+    { name: "Real Sociedad", category: "Clube europeu", context: "Barcelona", goals: 1 },
+    { name: "Borussia Mönchengladbach", category: "Clube europeu", context: "Barcelona", goals: 1 },
+    { name: "BATE Borisov", category: "Clube europeu", context: "Barcelona", goals: 1 },
+    // PSG / Europa e França
+    { name: "Olympique de Marseille", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Monaco", category: "Clube europeu", context: "PSG", goals: 4 },
+    { name: "Lyon", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Lille", category: "Clube europeu", context: "PSG", goals: 4 },
+    { name: "Rennes", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Nice", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Bordeaux", category: "Clube europeu", context: "PSG", goals: 4 },
+    { name: "Guingamp", category: "Clube europeu", context: "PSG", goals: 5 },
+    { name: "Toulouse", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Amiens", category: "Clube europeu", context: "PSG", goals: 2 },
+    { name: "Dijon", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Montpellier", category: "Clube europeu", context: "PSG", goals: 4 },
+    { name: "Angers", category: "Clube europeu", context: "PSG", goals: 2 },
+    { name: "Metz", category: "Clube europeu", context: "PSG", goals: 2 },
+    { name: "Nantes", category: "Clube europeu", context: "PSG", goals: 2 },
+    { name: "Saint-Étienne", category: "Clube europeu", context: "PSG", goals: 2 },
+    { name: "Caen", category: "Clube europeu", context: "PSG", goals: 1 },
+    { name: "Strasbourg", category: "Clube europeu", context: "PSG", goals: 1 },
+    { name: "Manchester United", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Liverpool", category: "Clube europeu", context: "PSG", goals: 1 },
+    { name: "Istanbul Başakşehir", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "Estrela Vermelha", category: "Clube europeu", context: "PSG", goals: 3 },
+    { name: "RB Leipzig", category: "Clube europeu", context: "PSG", goals: 1 },
+    { name: "Nassaji Mazandaran", category: "Clube asiático", context: "Al-Hilal", goals: 1 }
   ],
   gallery: [
-    {
-      title: 'Barcelona 2015',
-      tag: 'Auge europeu',
-      text: 'Neymar no período do trio MSN e da Champions League 2014/15.',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_-_FC_Barcelona_-_2015.jpg'
-    },
-    {
-      title: 'Libertadores com o Santos',
-      tag: 'Origem',
-      text: 'Final continental de 2011, símbolo da primeira fase no Santos.',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_Santos_2011.jpg'
-    },
-    {
-      title: 'Ouro olímpico 2016',
-      tag: 'Brasil',
-      text: 'O momento que deu ao Brasil o primeiro ouro olímpico no futebol masculino.',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_Rio_2016.jpg'
-    },
-    {
-      title: 'PSG 2017',
-      tag: 'Recorde mundial',
-      text: 'Apresentação em Paris após transferência histórica.',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_PSG.jpg'
-    },
-    {
-      title: 'Brasil 2018',
-      tag: 'Seleção',
-      text: 'Ciclo de Copa do Mundo com protagonismo técnico.',
-      image: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Neymar_2018.jpg'
-    }
+    { title: "Neymar no auge pelo Barcelona", tag: "Barcelona", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20-%20FC%20Barcelona%20-%202015.jpg", credit: "Wikimedia Commons / Alex Fau" },
+    { title: "Apresentação no Barcelona", tag: "Barcelona", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Barcelona%20presentation%202.jpg", credit: "Wikimedia Commons" },
+    { title: "Brasil e ouro olímpico", tag: "Seleção", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20Rio%202016.jpg", credit: "Agência Brasil / Wikimedia Commons" },
+    { title: "Neymar pela Seleção", tag: "Seleção", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20contra%20uruguai.jpg", credit: "Wikimedia Commons" },
+    { title: "Camisa do PSG", tag: "PSG", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Neymar%20PSG.jpg", credit: "Wikimedia Commons" },
+    { title: "Troféu Champions League", tag: "Troféu", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Champions%20League%20Trophy%20%2852736201132%29.jpg", credit: "Wikimedia Commons" },
+    { title: "Troféu Libertadores", tag: "Troféu", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Trof%C3%A9u%20da%20Copa%20Libertadores%20da%20Am%C3%A9rica%20de%202023.jpg", credit: "Wikimedia Commons" },
+    { title: "Copa das Confederações 2013", tag: "Seleção", image: "https://commons.wikimedia.org/wiki/Special:FilePath/Confed.Cup2013Champions.jpg", credit: "Wikimedia Commons" }
   ],
   sources: [
-    {
-      name: 'Transfermarkt — Perfil e estatísticas',
-      text: 'Base para clube atual, dados de Seleção, lista de gols por partida e filtros por tipo de gol.',
-      url: 'https://www.transfermarkt.com/neymar/profil/spieler/68290'
-    },
-    {
-      name: 'Transfermarkt — Pênaltis',
-      text: 'Base usada para pênaltis convertidos e perdidos na carreira.',
-      url: 'https://www.transfermarkt.com/neymar/elfmetertore/spieler/68290'
-    },
-    {
-      name: 'Lista de gols pela Seleção',
-      text: 'Base para 80 gols, 130 jogos, adversários e distribuição por competição pela Seleção Brasileira.',
-      url: 'https://en.wikipedia.org/wiki/List_of_international_goals_scored_by_Neymar'
-    },
-    {
-      name: 'Títulos e prêmios recebidos por Neymar',
-      text: 'Base complementar para títulos, prêmios individuais, faltas e hat-tricks citados.',
-      url: 'https://pt.wikipedia.org/wiki/Lista_de_t%C3%ADtulos_e_pr%C3%AAmios_recebidos_por_Neymar'
-    },
-    {
-      name: 'Olympics.com — carreira em números',
-      text: 'Fonte complementar sobre conquistas olímpicas e carreira internacional.',
-      url: 'https://www.olympics.com/en/news/neymar-career-in-numbers-trophies-records-medals-awards'
-    },
-    {
-      name: 'Wikimedia Commons — imagens',
-      text: 'Imagens de uso livre/referencial com créditos indicados no README.',
-      url: 'https://commons.wikimedia.org/wiki/Neymar'
-    }
+    { label: "Transfermarkt — Perfil, gols, pênaltis e conquistas", url: "https://www.transfermarkt.com/neymar" },
+    { label: "StatBunker — tipos de gol por pé, cabeça, falta e pênalti", url: "https://www.statbunker.com/players/getPlayerStats?player_id=37759" },
+    { label: "Wikimedia Commons — imagens reais em licenças abertas", url: "https://commons.wikimedia.org/wiki/Neymar" },
+    { label: "Wikipedia — títulos e estatísticas gerais", url: "https://pt.wikipedia.org/wiki/Neymar" }
   ]
 };

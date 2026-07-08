@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neymar Jr Archive | Supabase</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="supabase">
+  <header class="topbar">
+    <div class="container nav">
+      <a class="logo" href="index.html"><span class="logo-mark">NJR</span><span>Neymar Jr Archive<small>supabase</small></span></a>
+      <button class="mobile-toggle" id="mobile-toggle">Menu</button>
+      <nav class="nav-links" id="nav-links"></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Banco de dados integrado</p>
+          <h1>Dados dinâmicos via Supabase.</h1>
+          <p class="lead">Esta aba mostra o status da conexão, as tabelas esperadas e um formulário para registrar sugestões de atualização no banco. Se uma tabela ainda não existir, o site continua funcionando com o arquivo local <strong>js/data.js</strong>.</p>
+          <div class="hero-actions">
+            <a class="btn" href="sql/supabase-schema.sql" download>Baixar SQL</a>
+            <a class="btn secondary" href="index.html">Voltar ao dashboard</a>
+          </div>
+        </div>
+        <div class="phone-card"><div class="phone-screen"><div class="phone-content" id="hero-mini"></div></div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-title"><h2>Status da integração</h2><p>Use o SQL da pasta <strong>sql</strong> no painel do Supabase para criar as tabelas e popular os dados iniciais.</p></div>
+        <div class="supabase-status large" id="supabase-status"></div>
+        <div class="kpi-grid" id="supabase-info"></div>
+      </div>
+    </section>
+
+    <section class="section light">
+      <div class="container">
+        <div class="section-title"><h2>Tabelas esperadas</h2><p>Contagem de registros detectada no Supabase. “Não encontrada” significa que a tabela ainda não foi criada ou a policy não liberou leitura.</p></div>
+        <div class="table-wrap" id="supabase-tables"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-title"><h2>Sugerir atualização</h2><p>O formulário grava em <strong>site_feedback</strong>. Serve para coletar correções de gols, datas, imagens, fontes e observações.</p></div>
+        <form class="form-card" id="feedback-form">
+          <div class="form-grid">
+            <label>Nome
+              <input name="name" type="text" placeholder="Seu nome" />
+            </label>
+            <label>E-mail
+              <input name="email" type="email" placeholder="email@exemplo.com" />
+            </label>
+            <label>Categoria
+              <select name="category" required>
+                <option value="Clubes">Clubes</option>
+                <option value="Seleção">Seleção</option>
+                <option value="Gols">Gols</option>
+                <option value="Prêmios">Prêmios</option>
+                <option value="Adversários">Adversários</option>
+                <option value="Imagens">Imagens</option>
+              </select>
+            </label>
+            <label>Fonte/link
+              <input name="source_url" type="url" placeholder="https://..." />
+            </label>
+          </div>
+          <label>Mensagem
+            <textarea name="message" rows="5" required placeholder="Escreva a correção, nova informação ou sugestão..."></textarea>
+          </label>
+          <button class="btn" type="submit">Enviar ao Supabase</button>
+          <p class="note" id="feedback-message">O envio depende da tabela <strong>site_feedback</strong> e das policies do SQL.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><strong>Neymar Jr Archive</strong><p>Integração front-end com Supabase REST usando publishable key.</p></div>
+      <div class="footer-links" id="footer-sources"></div>
+    </div>
+  </footer>
+  <script src="js/data.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-service.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

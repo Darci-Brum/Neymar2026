@@ -1,84 +1,76 @@
-# Neymar Jr. | Site Completo
+# Neymar Jr Archive — versão com Supabase
 
-Projeto estático em HTML, CSS e JavaScript, pronto para subir no GitHub Pages.
+Site premium em HTML, CSS e JavaScript para GitHub Pages, com integração ao Supabase via REST.
 
-## Arquivos
+## O que foi incluído
 
-- `index.html` — página principal do site.
-- `css/style.css` — identidade visual, responsividade e animações.
-- `js/data.js` — banco de dados editável do site.
-- `js/app.js` — renderização dinâmica, filtros, abas e gráficos.
-
-## Como rodar
-
-Abra o arquivo `index.html` no navegador.
-
-Para evitar restrições de navegador com fontes/imagens externas, você também pode rodar com uma extensão tipo **Live Server** no VS Code.
+- Páginas separadas: Dashboard, Clubes, Seleção, Gols, Medalhas & Prêmios, Adversários, Galeria e Supabase.
+- Filtros por classificação em várias abas.
+- Imagens reais externas em fontes abertas/URLs públicas.
+- Dados locais em `js/data.js` como fallback.
+- Integração Supabase em:
+  - `js/supabase-config.js`
+  - `js/supabase-service.js`
+  - `sql/supabase-schema.sql`
+- Aba `supabase.html` para verificar status da conexão, tabelas e enviar sugestões de atualização.
 
 ## Como publicar no GitHub Pages
 
-1. Crie um repositório no GitHub.
-2. Envie todos os arquivos deste projeto para a raiz do repositório.
-3. Acesse `Settings` > `Pages`.
-4. Em `Build and deployment`, selecione `Deploy from a branch`.
-5. Escolha a branch `main` e a pasta `/root`.
+1. Extraia o ZIP.
+2. Suba todos os arquivos para um repositório no GitHub.
+3. Vá em **Settings > Pages**.
+4. Escolha **Deploy from a branch**.
+5. Selecione a branch `main` e a pasta `/root`.
 6. Salve e aguarde o link do GitHub Pages.
 
-## Como editar os dados
+## Como conectar ao Supabase
 
-Abra `js/data.js` e altere:
+A configuração já está em `js/supabase-config.js` com a URL REST e a publishable key informadas.
 
-- `passages`: clubes, Seleção, jogos, gols, assistências e imagens.
-- `timeline`: linha do tempo.
-- `titleGroups`: títulos coletivos, prêmios individuais e jogos históricos.
-- `goalTypes`: pênaltis, faltas, hat-tricks e outros dados.
-- `brazilGoalsByCompetition`: gols do Brasil por competição.
-- `opponents`: seleções e clubes contra quem Neymar marcou.
-- `gallery`: imagens da galeria.
-- `sources`: links das fontes.
+> Atenção: no front-end use somente `publishable` ou `anon public key`. Nunca coloque `service_role` no GitHub, HTML ou JavaScript público.
 
-## Observação importante sobre estatísticas
+## Como criar as tabelas no Supabase
 
-Os números de Neymar podem variar entre fontes porque alguns sites incluem ou excluem:
+1. Abra seu projeto no Supabase.
+2. Vá em **SQL Editor**.
+3. Copie todo o conteúdo de `sql/supabase-schema.sql`.
+4. Execute o SQL.
+5. Abra o site e entre na aba **Supabase**.
+6. Se aparecer “Supabase conectado”, os dados já estão vindo do banco.
 
-- amistosos de clubes;
-- categorias de base;
-- jogos oficiais e não oficiais;
-- critérios diferentes para assistência;
-- atualizações posteriores à data de consulta.
+## Como atualizar os dados
 
-Por isso, o projeto deixa todos os dados concentrados em `js/data.js`, para facilitar atualização.
+Você pode atualizar de duas formas:
 
-## Fontes usadas como base
+### Opção 1 — Pelo Supabase
+Edite as tabelas diretamente no Supabase, por exemplo:
 
-- Transfermarkt — perfil de Neymar: https://www.transfermarkt.com/neymar/profil/spieler/68290
-- Transfermarkt — todos os gols: https://www.transfermarkt.com/neymar/alletore/spieler/68290
-- Transfermarkt — pênaltis: https://www.transfermarkt.com/neymar/elfmetertore/spieler/68290
-- Lista de gols de Neymar pela Seleção: https://en.wikipedia.org/wiki/List_of_international_goals_scored_by_Neymar
-- Lista de títulos e prêmios recebidos por Neymar: https://pt.wikipedia.org/wiki/Lista_de_t%C3%ADtulos_e_pr%C3%AAmios_recebidos_por_Neymar
-- Olympics.com — carreira em números: https://www.olympics.com/en/news/neymar-career-in-numbers-trophies-records-medals-awards
-- Wikimedia Commons — imagens de Neymar: https://commons.wikimedia.org/wiki/Neymar
+- `neymar_club_passages`
+- `neymar_individual_awards`
+- `neymar_collective_titles`
+- `neymar_opponents`
+- `neymar_gallery`
 
-## Créditos de imagens
+Depois de salvar, atualize o site no navegador.
 
-As imagens são carregadas por links externos do Wikimedia Commons via `Special:Redirect/file/...`. Verifique a licença individual de cada arquivo antes de uso comercial.
+### Opção 2 — Pelo arquivo local
+Edite `js/data.js`. O site usa esse arquivo automaticamente quando as tabelas do Supabase não existem ou não estão liberadas por policy.
 
-Arquivos usados:
+## Tabelas principais
 
-- `Neymar_-_FC_Barcelona_-_2015.jpg`
-- `Neymar_Santos_2011.jpg`
-- `Neymar_Rio_2016.jpg`
-- `Neymar_PSG.jpg`
-- `Neymar_2018.jpg`
+- `neymar_profile`: dados gerais do Neymar e imagem principal.
+- `neymar_totals`: KPIs do dashboard.
+- `neymar_goal_types`: pênaltis, faltas, pé direito, pé esquerdo e cabeça.
+- `neymar_club_passages`: passagens por clubes, jogos, gols, assistências, pênaltis e faltas.
+- `neymar_national_teams`: Seleção de base, olímpica e principal.
+- `neymar_collective_titles`: títulos coletivos.
+- `neymar_individual_awards`: medalhas e prêmios individuais.
+- `neymar_important_goals`: gols históricos.
+- `neymar_opponents`: times e seleções contra quem marcou.
+- `neymar_gallery`: galeria de imagens.
+- `site_feedback`: sugestões enviadas pela aba Supabase.
+- `site_page_views`: registros simples de acesso às páginas.
 
-## Personalização rápida
+## Observação sobre números
 
-No `css/style.css`, altere as variáveis do `:root`:
-
-```css
---barca-blue:#003b86;
---barca-red:#a50044;
---gold:#f4c21b;
-```
-
-Você pode trocar para uma identidade mais brasileira usando verde e amarelo, ou manter o visual azul-grená inspirado no auge de Neymar no Barcelona.
+Os números de gols, assistências, faltas e pênaltis podem variar conforme critério da fonte, competição considerada e atualização da carreira. O projeto está estruturado para facilitar ajustes rápidos no Supabase.

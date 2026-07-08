@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neymar Jr Archive | Adversários</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="adversarios">
+  <header class="topbar"><div class="container nav"><a class="logo" href="index.html"><span class="logo-mark">NJR</span><span>Neymar Jr Archive<small>adversários</small></span></a><button class="mobile-toggle" id="mobile-toggle">Menu</button><nav class="nav-links" id="nav-links"></nav></div></header>
+  <main>
+    <section class="hero"><div class="container hero-grid"><div><p class="eyebrow">Todos os adversários cadastrados</p><h1>Times e seleções que já sofreram gol de Neymar.</h1><p class="lead">Tabela pesquisável e filtrável por classificação: Seleção, clube brasileiro, clube europeu, sul-americano ou asiático.</p><div class="hero-actions"><a class="btn" href="gols.html">Tipos de gols</a><a class="btn secondary" href="clubes.html">Clubes</a></div></div><div class="phone-card"><div class="phone-screen"><div class="phone-content" id="hero-mini"></div></div></div></div></section>
+    <section class="section light"><div class="container"><div class="section-title"><h2>Adversários</h2><p id="opponents-count">Carregando adversários...</p></div><div class="filter-panel"><input id="opponents-search" type="search" placeholder="Pesquisar adversário, clube ou seleção..." /><div id="opponents-filters"></div></div><div class="table-wrap" id="opponents-table"></div><p class="note">A lista é ampla e editável. Para precisão absoluta por gol e data, atualize a matriz <strong>opponents</strong> em <strong>js/data.js</strong> usando a página “All goals” do Transfermarkt como base.</p></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-grid"><div><strong>Neymar Jr Archive</strong><p>Filtro feito em JavaScript puro, sem backend.</p></div><div class="supabase-status" id="supabase-status"></div><div class="footer-links" id="footer-sources"></div></div></footer>
+  <script src="js/data.js"></script><script src="js/supabase-config.js"></script><script src="js/supabase-service.js"></script><script src="js/app.js"></script>
+</body>
+</html>
