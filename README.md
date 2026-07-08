@@ -1,76 +1,77 @@
-# Neymar Jr Archive — versão com Supabase
+# Neymar Jr Supabase Archive — Strict Mode
 
-Site premium em HTML, CSS e JavaScript para GitHub Pages, com integração ao Supabase via REST.
+Site premium em **HTML + CSS + JavaScript** para GitHub Pages, com uma regra central:
 
-## O que foi incluído
+> **Nenhum dado da carreira fica no código do site. Tudo é buscado estritamente do Supabase.**
 
-- Páginas separadas: Dashboard, Clubes, Seleção, Gols, Medalhas & Prêmios, Adversários, Galeria e Supabase.
-- Filtros por classificação em várias abas.
-- Imagens reais externas em fontes abertas/URLs públicas.
-- Dados locais em `js/data.js` como fallback.
-- Integração Supabase em:
-  - `js/supabase-config.js`
-  - `js/supabase-service.js`
-  - `sql/supabase-schema.sql`
-- Aba `supabase.html` para verificar status da conexão, tabelas e enviar sugestões de atualização.
+Não existe `data.js` e não existe fallback local. Se o Supabase não estiver com as tabelas criadas e populadas, o site mostra aviso de banco vazio.
 
-## Como publicar no GitHub Pages
+## Páginas incluídas
 
-1. Extraia o ZIP.
-2. Suba todos os arquivos para um repositório no GitHub.
-3. Vá em **Settings > Pages**.
-4. Escolha **Deploy from a branch**.
-5. Selecione a branch `main` e a pasta `/root`.
-6. Salve e aguarde o link do GitHub Pages.
+- `index.html` — dashboard geral
+- `clubes.html` — passagens por clubes com filtros
+- `selecao.html` — Seleção Brasileira e categorias
+- `estatisticas.html` — gols, assistências, pênaltis, faltas e gols importantes
+- `premios.html` — medalhas, prêmios individuais e títulos coletivos com imagens
+- `adversarios.html` — times e seleções contra quem Neymar marcou gol
+- `transferencias.html` — propostas, transferências, salários estimados e contratos
+- `midia.html` — fotos reais e vídeos/documentários/entrevistas
+- `supabase.html` — status da conexão e formulário de correções
 
-## Como conectar ao Supabase
-
-A configuração já está em `js/supabase-config.js` com a URL REST e a publishable key informadas.
-
-> Atenção: no front-end use somente `publishable` ou `anon public key`. Nunca coloque `service_role` no GitHub, HTML ou JavaScript público.
-
-## Como criar as tabelas no Supabase
+## Como ativar no Supabase
 
 1. Abra seu projeto no Supabase.
 2. Vá em **SQL Editor**.
-3. Copie todo o conteúdo de `sql/supabase-schema.sql`.
-4. Execute o SQL.
-5. Abra o site e entre na aba **Supabase**.
-6. Se aparecer “Supabase conectado”, os dados já estão vindo do banco.
+3. Copie todo o conteúdo de `sql/supabase_full_setup.sql`.
+4. Execute o script.
+5. Publique os arquivos do site no GitHub Pages.
+6. Abra `supabase.html` para confirmar as tabelas carregadas.
 
-## Como atualizar os dados
+## Configuração do banco
 
-Você pode atualizar de duas formas:
+O arquivo `js/supabase-config.js` já está configurado com a URL REST e a chave publishable que você enviou:
 
-### Opção 1 — Pelo Supabase
-Edite as tabelas diretamente no Supabase, por exemplo:
+```js
+window.NJR_SUPABASE_CONFIG = {
+  restUrl: 'https://jiefqjpvxbgzxyhufpib.supabase.co/rest/v1',
+  apiKey: 'SUA_CHAVE_PUBLICA'
+};
+```
 
+Use apenas chave pública/publishable no front-end. **Nunca coloque service_role no GitHub.**
+
+## Como editar dados depois
+
+Edite diretamente as tabelas no Supabase:
+
+- `neymar_profile`
+- `neymar_stat_cards`
 - `neymar_club_passages`
-- `neymar_individual_awards`
-- `neymar_collective_titles`
+- `neymar_national_teams`
+- `neymar_goal_methods`
+- `neymar_goal_assist_by_team`
+- `neymar_important_goals`
+- `neymar_career_milestones`
+- `neymar_titles`
+- `neymar_awards`
 - `neymar_opponents`
-- `neymar_gallery`
+- `neymar_media_photos`
+- `neymar_media_videos`
+- `neymar_transfers_contracts`
+- `neymar_sources`
 
-Depois de salvar, atualize o site no navegador.
+## Observação sobre imagens e vídeos
 
-### Opção 2 — Pelo arquivo local
-Edite `js/data.js`. O site usa esse arquivo automaticamente quando as tabelas do Supabase não existem ou não estão liberadas por policy.
+As imagens e vídeos não ficam dentro do projeto. O banco guarda URLs públicas, principalmente de Wikimedia Commons, Netflix, Red Bull, Globoplay e YouTube. Isso mantém o projeto leve para GitHub Pages.
 
-## Tabelas principais
+## Observação sobre salários
 
-- `neymar_profile`: dados gerais do Neymar e imagem principal.
-- `neymar_totals`: KPIs do dashboard.
-- `neymar_goal_types`: pênaltis, faltas, pé direito, pé esquerdo e cabeça.
-- `neymar_club_passages`: passagens por clubes, jogos, gols, assistências, pênaltis e faltas.
-- `neymar_national_teams`: Seleção de base, olímpica e principal.
-- `neymar_collective_titles`: títulos coletivos.
-- `neymar_individual_awards`: medalhas e prêmios individuais.
-- `neymar_important_goals`: gols históricos.
-- `neymar_opponents`: times e seleções contra quem marcou.
-- `neymar_gallery`: galeria de imagens.
-- `site_feedback`: sugestões enviadas pela aba Supabase.
-- `site_page_views`: registros simples de acesso às páginas.
+Salários de jogadores raramente são oficiais. A tabela `neymar_transfers_contracts` tem campo `estimated_salary`, com observação de fonte. Atualize esse campo se quiser usar outro critério.
 
-## Observação sobre números
+## Fontes usadas como referência
 
-Os números de gols, assistências, faltas e pênaltis podem variar conforme critério da fonte, competição considerada e atualização da carreira. O projeto está estruturado para facilitar ajustes rápidos no Supabase.
+As fontes também foram cadastradas na tabela `neymar_sources`, incluindo Transfermarkt, StatBunker, Reuters, Guinness World Records, Capology, Netflix, Red Bull e Globoplay.
+
+## Fotos com companheiros
+
+A seed inclui fotos de Neymar com Messi e Suárez na fase MSN, usando URLs externas do FC Barcelona e da LALIGA em `neymar_media_photos`, filtro **Companheiros/MSN** na aba de mídia.
