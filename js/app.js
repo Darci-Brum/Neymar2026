@@ -143,21 +143,7 @@ function initLayout(){
   const brandName = $('#brand-name'); if(brandName) brandName.textContent = p.short_name || 'Neymar Jr';
   const updated = $('#updated-label'); if(updated) updated.textContent = p.updated_at_label ? `Atualizado em ${p.updated_at_label}` : 'Dados do Supabase';
   renderStatus();
-  renderTeamCrests();
   renderSources();
-}
-
-function renderTeamCrests(){
-  const topbar = $('.topbar');
-  if(!topbar || $('#team-crest-strip')) return;
-  const rows = list('teamCrests');
-  if(!rows.length) return;
-  const html = `<div class="team-strip" id="team-crest-strip"><div class="container team-strip-inner">${rows.map(t => {
-    const abbr = esc(t.abbreviation || String(t.team_name || '').slice(0,3).toUpperCase());
-    const logo = t.logo_url ? `<img src="${esc(t.logo_url)}" alt="Escudo ${esc(t.team_name)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : '';
-    return `<a class="team-chip" href="${esc(t.link_url || 'clubes.html')}" style="--team-color:${esc(t.theme_color || '#ffdf00')}"><span class="crest-badge"><span class="crest-fallback">${abbr}</span>${logo}</span><span class="team-info"><strong>${esc(t.team_name)}</strong><span>${esc(t.period_label || '')}</span><small>${esc(t.focus_label || '')}</small></span></a>`;
-  }).join('')}</div></div>`;
-  topbar.insertAdjacentHTML('beforeend', html);
 }
 
 function renderStatus(){
